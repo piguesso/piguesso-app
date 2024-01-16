@@ -13,9 +13,15 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.29.3",
+    "@tensorflow-models/mobilenet": "^2.1.1",
+    "@tensorflow/tfjs": "^4.16.0",
     "next": "14.0.4",
+    "next-themes": "^0.2.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tailwind-merge": "^2.2.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.4",
