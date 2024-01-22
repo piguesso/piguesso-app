@@ -19,6 +19,7 @@
     "next": "14.0.4",
     "next-themes": "^0.2.1",
     "react": "^18",
+    "react-color": "^2.19.3",
     "react-dom": "^18",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7"
@@ -28,6 +29,7 @@
     "@commitlint/config-conventional": "^18.4.4",
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-color": "^3.0.11",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",

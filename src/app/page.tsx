@@ -2,6 +2,9 @@ import Image from "next/image";
 import { SignIn } from "@clerk/nextjs";
 import TextStyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
+import Link from "next/link";
+
+interface homeProps {}
 
 export default function Home() {
   return (
@@ -16,6 +19,9 @@ export default function Home() {
         Piguesso
       </div>
       <SignIn />
+      <Link href="/drawing" className={TextStyles.Text}>
+        LINK
+      </Link>
     </main>
   );
 }
