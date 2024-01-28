@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { SignIn } from "@clerk/nextjs";
+import { SignIn, SignInButton } from "@clerk/nextjs";
 import TextStyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
-import Link from "next/link";
+import DrawLink from "@/components/draw-link";
 
 interface homeProps {}
 
@@ -18,10 +18,8 @@ export default function Home() {
       >
         Piguesso
       </div>
-      <SignIn />
-      <Link href="/drawing" className={TextStyles.Text}>
-        LINK
-      </Link>
+      <SignInButton />
+      <DrawLink />
     </main>
   );
 }
