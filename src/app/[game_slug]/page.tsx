@@ -7,8 +7,7 @@ interface introProps {
   };
 }
 
-const TIME_TILL_START = 500000;
-
+const TIME_TILL_START = 500;
 export default function page({ params }: introProps) {
   return (
     <div className={"w-full h-full bg-primary overflow-clip"}>

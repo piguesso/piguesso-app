@@ -3,15 +3,24 @@
 import { FC, SetStateAction, useState } from "react";
 import { useDraw } from "../../../hooks/useDraw";
 import { ChromePicker } from "react-color";
+import Skribble from "@/types/skribble";
 
 interface pageProps {}
 
+const skribble = new Skribble();
+
 const Page: FC<pageProps> = ({}) => {
+  let timeOfLastPoint = 0;
+
   const [color, setColor] = useState<string>("#000");
   const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
 
   function drawLine({ prevPoint, currentPoint, ctx }: Draw) {
+    if (timeOfLastPoint === 0) {
+      timeOfLastPoint = Date.now();
+    }
     const { x: currX, y: currY } = currentPoint;
+    const newTime = Date.now();
     const lineColor = color;
     const lineWidth = 5;
 
@@ -27,10 +36,18 @@ const Page: FC<pageProps> = ({}) => {
     ctx.beginPath();
     ctx.arc(startPoint.x, startPoint.y, 2, 0, 2 * Math.PI);
     ctx.fill();
+
+    skribble.update(currX, currY, newTime);
+    timeOfLastPoint = newTime;
   }
 
+  const handleClear = () => {
+    skribble.clear();
+    clear();
+  };
+
   return (
-    <div className="w-screen h-screen bg-white flex justify-center items-center">
+    <div className="w-full h-full bg-white flex justify-center items-center overflow-clip">
       <div className="flex flex-col gap-10 pr-10">
         <ChromePicker
           color={color}
@@ -39,7 +56,7 @@ const Page: FC<pageProps> = ({}) => {
         <button
           type="button"
           className="p-2 rounded-md border border-black text-black"
-          onClick={clear}
+          onClick={handleClear}
         >
           Clear canvas
         </button>
