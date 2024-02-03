@@ -1,4 +1,4 @@
-type Draw = {
+type DrawProps = {
   ctx: CanvasRenderingContext2D;
   currentPoint: Point;
   prevPoint: Point | null;

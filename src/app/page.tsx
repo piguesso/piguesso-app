@@ -1,10 +1,15 @@
 import Image from "next/image";
-import { SignIn, SignInButton } from "@clerk/nextjs";
+// import { SignIn, SignInButton } from "@clerk/nextjs";
 import TextStyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
 import DrawLink from "@/components/draw-link";
+import DynamicIsland from "@/components/navigation/nav-bar";
 
 interface homeProps {}
+
+/*
+<SignInButton />
+*/
 
 export default function Home() {
   return (
@@ -18,8 +23,8 @@ export default function Home() {
       >
         Piguesso
       </div>
-      <SignInButton />
       <DrawLink />
+      <DynamicIsland />
     </main>
   );
 }

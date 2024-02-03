@@ -79,6 +79,7 @@ class Skribble {
     ) {
       return false;
     }
+    return true;
   }
 }
 

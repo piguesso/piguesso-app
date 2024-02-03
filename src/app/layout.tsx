@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Sono } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+// import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { twMerge } from "tailwind-merge";
+import NavBar from "@/components/navigation/nav-bar";
+import Script from "next/script";
+import DynamicIsland from "@/components/navigation/nav-bar";
 
 const sono = Sono({ subsets: ["latin"] });
 
@@ -18,25 +21,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html
-        lang="en"
-        className={twMerge(
-          "h-full w-full overflow-y-scroll bg-primary",
-          sono.className,
-        )}
-      >
-        <body className={"h-full w-full bg-primary overflow-y-scroll"}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    // <ClerkProvider>
+    <html
+      lang="en"
+      className={twMerge(
+        "h-full w-full overflow-y-scroll bg-primary",
+        sono.className,
+      )}
+    >
+      <body className={"h-full w-full bg-primary overflow-y-scroll"}>
+        <Script
+          src="https://kit.fontawesome.com/7dfc9e0334.js"
+          crossOrigin="anonymous"
+        />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+    // </ClerkProvider>
   );
 }

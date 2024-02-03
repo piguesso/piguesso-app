@@ -46,15 +46,15 @@ module.exports = {
         sans: ["Inter", "system-ui", "sans-serif"],
       },
       colors: {
+        primary: "#AE6DF5",
+        secondary: "#00C896",
         border: "#3B3C36",
         white: "#FDFDFD",
         background: "#151515",
         black: "#151515",
-        primary: "#AE6DF5",
         surface: "#3A3E41",
         grey: "#A0A0A0",
         lightgrey: "#E5E7EB",
-        secondary: "#00C896",
         success: "#58A142",
         warning: "#FF793F",
         destructive: "#BB362E",
@@ -142,10 +142,15 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        "circle-to-rounded": {
+          "0%": { borderRadius: "100%" },
+          "100%": { borderRadius: "0%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "circle-to-rounded": "circle-to-rounded 0.3s ease-out",
       },
       lineHeight: {
         tighter: "1.1",
