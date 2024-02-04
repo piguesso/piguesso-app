@@ -6,6 +6,7 @@ import { ChromePicker } from "react-color";
 import Skribble from "@/utils/skribble";
 import { Navbar } from "@/components/navigation/nav-bar";
 import ColorControls from "@/components/navigation/color-controls";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 interface pageProps {}
 
@@ -16,6 +17,8 @@ export default function Page(props: pageProps) {
   const [color, setColor] = useState<string>("#000000");
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
   const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
+
+  const size = useWindowSize();
 
   function drawLine({ prevPoint, currentPoint, ctx }: DrawProps) {
     if (timeOfLastPoint === 0) {
@@ -80,8 +83,8 @@ export default function Page(props: pageProps) {
         ref={canvasRef}
         onMouseDown={onMouseDown}
         onMouseUp={() => setPoints([])}
-        width={750}
-        height={750}
+        width={(size.width || 0) * 0.8}
+        height={(size.height || 0) * 0.8}
         className="border border-black rounded-md"
       />
       <div

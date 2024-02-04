@@ -1,6 +1,6 @@
 "use client";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TextStyles from "@/utils/textstyles";
+import { SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -15,12 +15,15 @@ export default function NavLink({ href, lable, children }: NavLinkProps) {
   if (pathname.includes(href)) {
     return (
       <div className="w-full h-full">
-        <Link href={href}>
-          <div>
-            <div className="w-full rounded-full bg-primary py-1">
-              {children}
-            </div>
-            <div>{lable}</div>
+        <Link href={href} className="w-full h-full">
+          <div className="w-full h-full p-1">
+            {href === "/profile" && (
+              <SignedOut>
+                <div className="w-full rounded-full bg-primary">{children}</div>
+              </SignedOut>
+            )}
+            {children}
+            <div className={TextStyles.LinkText}>{lable}</div>
           </div>
         </Link>
       </div>
@@ -28,10 +31,10 @@ export default function NavLink({ href, lable, children }: NavLinkProps) {
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full p-1">
       <Link href={href}>
-        <div className={"py-1"}>{children}</div>
-        <div>{lable}</div>
+        <div>{children}</div>
+        <div className={TextStyles.LinkText}>{lable}</div>
       </Link>
     </div>
   );

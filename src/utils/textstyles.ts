@@ -18,7 +18,7 @@ const TextStyles = {
   BigTag: "text-[0.9375rem] dark:text-white text-black",
   Tag: "text-xs text-darkgrey dark:text-grey",
   LinkText:
-    "text-[1.0625rem] text-darkgrey dark:text-grey hover:text-secondary",
+    "font-sans text-sm text-darkgrey dark:text-grey hover:text-secondary",
   BigHint: "text-[1.0625rem]  text-darkgrey dark:text-grey",
   Hint: "text-[0.9375rem] text-darkgrey dark:text-grey",
   CursiveHint:
