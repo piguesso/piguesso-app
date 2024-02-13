@@ -36,7 +36,7 @@ export function Navbar() {
           <NavLink href={"/user"} lable={"Profile"}>
             <SignedIn>
               <div className="flex justify-center">
-                <UserButton />
+                <UserButton afterSignOutUrl="/" />
               </div>
             </SignedIn>
             <SignedOut>
