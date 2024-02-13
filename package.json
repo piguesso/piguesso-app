@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "migration:create": "drizzle-kit generate:pg",
+    "migration:run": "node ./src/scripts/migrate.js",
+    "migration:drop": "dizzle-kit drop",
+    "migration:check": "drizzle-kit check:pg"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

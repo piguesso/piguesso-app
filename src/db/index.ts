@@ -7,6 +7,6 @@ const db = drizzle(client);
 
 const migrationClient = postgres(process.env.DB_CONNECTION_STRING!, { max: 1 });
 const migrationDb = drizzle(migrationClient);
-const migrateDb = migrate(migrationDb, { migrationsFolder: "./migrations" });
+migrate(migrationDb, { migrationsFolder: "./migrations" });
 
-export { db, migrateDb };
+export { db };
