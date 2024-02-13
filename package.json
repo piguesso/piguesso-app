@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "migration:create": "drizzle-kit generate:pg",
+    "migration:run": "node ./src/scripts/migrate.js",
+    "migration:drop": "dizzle-kit drop",
+    "migration:check": "drizzle-kit check:pg"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
@@ -31,8 +35,11 @@
     "@tensorflow-models/mobilenet": "^2.1.1",
     "@tensorflow/tfjs": "^4.16.0",
     "cmdk": "^0.2.1",
+    "dotenv": "^16.4.3",
+    "drizzle-orm": "^0.29.3",
     "next": "14.0.4",
     "next-themes": "^0.2.1",
+    "postgres": "^3.4.3",
     "react": "^18",
     "react-color": "^2.19.3",
     "react-dom": "^18",
@@ -49,6 +56,7 @@
     "@types/react-color": "^3.0.11",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "drizzle-kit": "^0.20.14",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "husky": "^8.0.3",
