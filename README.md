@@ -34,3 +34,27 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Migrations
+There are four different commands to handle migrations. You can either auto-generate migrations, run them, drop them, or check if there are any critical intersections between migrations.
+### Auto-generate migrations
+This command will automatically create migrations from the changes made in schema files. So, whenever you change something in schema files, please run this command to avoid issues.
+```bash
+npm run migration:create
+```
+### Run migrations
+After creating the migrations, they should be run to use it and reflect the new structure in the database.
+```bash
+npm run migration:run
+```
+### Drop migrations
+With this command, you can delete previously created migrations. The command will let you choose which migration to drop, aka delete. <br/>
+⚠️ **Be aware when using this command, because you shouldn't delete migrations that have already been run by someone.**
+```bash
+npm run migration:drop
+```
+### Check migrations
+This command will check if there are any incompatibilities with other migrations.
+```bash
+npm run migration:check
+```
