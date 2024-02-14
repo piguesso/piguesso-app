@@ -1,3 +1,4 @@
+import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import {
   boolean,
   integer,
@@ -16,6 +17,11 @@ const games = pgTable("games", {
   winnerId: serial("winner_id"),
 });
 
+export type InsertGame = InferInsertModel<typeof games>;
+
+export type SelectGame = InferSelectModel<typeof games>;
+export type SelectGames = SelectGame[];
+
 const rounds = pgTable("rounds", {
   id: serial("id").primaryKey(),
   gameId: serial("game_id").notNull(),
@@ -24,6 +30,12 @@ const rounds = pgTable("rounds", {
   startTime: timestamp("start_time").notNull(),
   endTime: timestamp("end_time").notNull(),
 });
+
+export type InsertRound = InferInsertModel<typeof rounds>;
+export type InsertRounds = InsertRound[];
+
+export type SelectRound = InferSelectModel<typeof rounds>;
+export type SelectRounds = SelectRound[];
 
 const players = pgTable("players", {
   playerId: varchar("player_id").notNull(),
@@ -34,5 +46,11 @@ const players = pgTable("players", {
   isHost: boolean("is_host").default(false),
   isWinner: boolean("is_winner").default(false),
 });
+
+export type InsertPlayer = InferInsertModel<typeof players>;
+export type InsertPlayers = InsertPlayer[];
+
+export type SelectPlayer = InferSelectModel<typeof players>;
+export type SelectPlayers = SelectPlayer[];
 
 export { games, rounds, players, gameState };

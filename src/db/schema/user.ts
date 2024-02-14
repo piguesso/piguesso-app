@@ -1,8 +1,12 @@
+import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { pgTable, varchar } from "drizzle-orm/pg-core";
 
-const users = pgTable("users", {
+export const users = pgTable("users", {
   clerkId: varchar("clerk_id").unique().notNull(),
   biography: varchar("biography", { length: 1000 }),
 });
 
-export { users };
+export type InsertUser = InferInsertModel<typeof users>;
+
+export type SelectUser = InferSelectModel<typeof users>;
+export type SelectUsers = SelectUser[];
