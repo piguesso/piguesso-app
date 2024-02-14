@@ -40,7 +40,7 @@ export function Navbar() {
               </div>
             </SignedIn>
             <SignedOut>
-              <SignInButton>
+              <SignInButton afterSignUpUrl="/join">
                 <LoginOutlinedIcon className="mx-auto" />
               </SignInButton>
             </SignedOut>

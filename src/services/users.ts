@@ -31,15 +31,3 @@ export const updateUser = async (
     .where(eq(users.clerkId, clerkId))
     .execute();
 };
-
-export const fetchUser = async (clerkId: string) => {
-  return await db
-    .select()
-    .from(users)
-    .where(eq(users.clerkId, clerkId))
-    .execute();
-};
-
-export const fetchUsers = async () => {
-  return await db.select().from(users).execute();
-};

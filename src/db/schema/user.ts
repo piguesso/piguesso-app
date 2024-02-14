@@ -4,7 +4,7 @@ import { pgTable, varchar } from "drizzle-orm/pg-core";
 export const users = pgTable("users", {
   clerkId: varchar("clerk_id").primaryKey().unique().notNull(),
   biography: varchar("biography", { length: 1000 }),
-  tag: varchar("tag").unique().primaryKey().notNull(),
+  tag: varchar("tag").unique().notNull(),
 });
 
 export type InsertUser = InferInsertModel<typeof users>;

@@ -14,7 +14,7 @@ const gameState = pgEnum("game_state", ["waiting", "playing", "finished"]);
 const games = pgTable("games", {
   id: serial("id").primaryKey(),
   status: gameState("status").default("waiting"),
-  winnerId: serial("winner_id"),
+  winnerId: varchar("winner_id"),
 });
 
 export type InsertGame = InferInsertModel<typeof games>;
