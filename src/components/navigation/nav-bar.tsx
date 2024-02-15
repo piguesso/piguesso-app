@@ -33,14 +33,17 @@ export function Navbar() {
           </NavLink>
         </li>
         <li className="mx-4 text-center w-1/3 min-w-[50px] flex">
-          <NavLink href={"/user"} lable={"Profile"}>
+          <NavLink href={""} lable={"Profile"}>
             <SignedIn>
               <div className="flex justify-center">
                 <UserButton afterSignOutUrl="/" />
               </div>
             </SignedIn>
             <SignedOut>
-              <SignInButton>
+              <SignInButton
+                afterSignInUrl={"/drawing"}
+                afterSignUpUrl={"/join"}
+              >
                 <LoginOutlinedIcon className="mx-auto" />
               </SignInButton>
             </SignedOut>

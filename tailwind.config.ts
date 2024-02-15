@@ -47,7 +47,6 @@ module.exports = {
       },
       colors: {
         primary: "#AE6DF5",
-        secondary: "#00C896",
         border: "#3B3C36",
         white: "#FDFDFD",
         background: "#151515",
@@ -55,8 +54,8 @@ module.exports = {
         surface: "#3A3E41",
         grey: "#A0A0A0",
         lightgrey: "#E5E7EB",
-        success: "#58A142",
-        warning: "#FF793F",
+        success: "#6A9F4E",
+        warning: "#EE814E",
         destructive: "#BB362E",
         accent: "#FDFDFD/10",
         "accent-foreground": "#FDFDFD/5",
