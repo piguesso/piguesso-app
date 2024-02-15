@@ -8,6 +8,27 @@
       "when": 1707822069351,
       "tag": "0000_unique_payback",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1707899953899,
+      "tag": "0001_fat_cannonball",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1707941915548,
+      "tag": "0002_spicy_nitro",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1707942180371,
+      "tag": "0003_groovy_captain_britain",
+      "breakpoints": true
     }
   ]
 }

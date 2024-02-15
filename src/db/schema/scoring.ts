@@ -1,3 +1,4 @@
+import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
 
 const playerScoring = pgTable("player_scoring", {
@@ -11,5 +12,9 @@ const playerScoring = pgTable("player_scoring", {
   gamesTop3: integer("games_top3").default(0),
   gamesBottom3: integer("games_bottom3").default(0),
 });
+
+export type InsertPlayerScoring = InferInsertModel<typeof playerScoring>;
+
+export type SelectPlayerScoring = InferSelectModel<typeof playerScoring>;
 
 export { playerScoring };

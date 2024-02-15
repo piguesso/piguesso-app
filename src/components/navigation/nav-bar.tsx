@@ -40,10 +40,7 @@ export function Navbar() {
               </div>
             </SignedIn>
             <SignedOut>
-              <SignInButton
-                afterSignInUrl={"/drawing"}
-                afterSignUpUrl={"/join"}
-              >
+              <SignInButton afterSignUpUrl="/join">
                 <LoginOutlinedIcon className="mx-auto" />
               </SignInButton>
             </SignedOut>

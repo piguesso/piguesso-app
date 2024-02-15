@@ -26,11 +26,11 @@ export default function RootLayout({
       <html
         lang="en"
         className={twMerge(
-          "h-full w-full overflow-y-scroll bg-primary",
+          "h-full w-full overflow-y-scroll bg-background",
           sono.className,
         )}
       >
-        <body className={"h-full w-full bg-primary overflow-y-scroll"}>
+        <body className={"h-full w-full bg-background overflow-y-scroll"}>
           <Script
             src="https://kit.fontawesome.com/7dfc9e0334.js"
             crossOrigin="anonymous"

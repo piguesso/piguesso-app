@@ -9,7 +9,7 @@ import TextStyles from "@/utils/textstyles";
 export default async function Page() {
   const User = await currentUser();
 
-  if (!User) {
+  if (!User || !User.username) {
     redirect("/");
   }
 
@@ -18,13 +18,7 @@ export default async function Page() {
   });
 
   if (!userExists) {
-    await db
-      .insert(users)
-      .values({
-        clerkId: User.id,
-        biography: "I am a new",
-      })
-      .onConflictDoNothing();
+    await db.insert(users).values({ clerkId: User.id, tag: "NewTag", biography: "NewBio" });
   }
 
   return (
