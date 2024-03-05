@@ -1,5 +1,5 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
-import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { integer, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 
 const playerScoring = pgTable("player_scoring", {
   playerId: varchar("player_id").notNull(),
@@ -11,6 +11,8 @@ const playerScoring = pgTable("player_scoring", {
   gamesLost: integer("games_lost").default(0),
   gamesTop3: integer("games_top3").default(0),
   gamesBottom3: integer("games_bottom3").default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export type InsertPlayerScoring = InferInsertModel<typeof playerScoring>;
