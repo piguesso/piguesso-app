@@ -15,6 +15,8 @@ const games = pgTable("games", {
   id: serial("id").primaryKey(),
   status: gameState("status").default("waiting"),
   winnerId: varchar("winner_id"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export type InsertGame = InferInsertModel<typeof games>;
@@ -45,6 +47,8 @@ const players = pgTable("players", {
   place: integer("place").default(1),
   isHost: boolean("is_host").default(false),
   isWinner: boolean("is_winner").default(false),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export type InsertPlayer = InferInsertModel<typeof players>;
