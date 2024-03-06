@@ -1,10 +1,18 @@
+"use client";
 import NavLink from "./nav-link";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 
-export default function DynamicIsland() {
+interface DynamicIslandProps {
+  UserImageUrl: string;
+  UserTag?: string;
+}
+
+export default function DynamicIsland(props: DynamicIslandProps) {
   return (
     <div
       className={
@@ -12,13 +20,18 @@ export default function DynamicIsland() {
       }
     >
       <div className="max-w-fit h-full flex">
-        <Navbar />
+        <Navbar UserImageUrl={props.UserImageUrl} UserTag={props.UserTag} />
       </div>
     </div>
   );
 }
 
-export function Navbar() {
+interface NavbarProps {
+  UserImageUrl: string;
+  UserTag?: string;
+}
+
+export function Navbar(props: NavbarProps) {
   return (
     <div className="h-full">
       <ul className="flex w-full h-full justify-evenly items-center">
@@ -33,12 +46,18 @@ export function Navbar() {
           </NavLink>
         </li>
         <li className="mx-4 text-center w-1/3 min-w-[50px] flex">
-          <NavLink href={""} lable={"Profile"}>
-            <SignedIn>
-              <div className="flex justify-center">
-                <UserButton afterSignOutUrl="/" />
-              </div>
-            </SignedIn>
+          <NavLink href={props.UserImageUrl ? `/user/${props.UserTag}` : ""} lable={"Profile"}>
+            {props.UserImageUrl && props.UserTag &&
+              <SignedIn>
+                <Image
+                  className="rounded-full"
+                  src={props.UserImageUrl}
+                  width="28"
+                  height="28"
+                  alt="Profile"
+                />
+              </SignedIn>
+            }
             <SignedOut>
               <SignInButton afterSignUpUrl="/join">
                 <LoginOutlinedIcon className="mx-auto" />

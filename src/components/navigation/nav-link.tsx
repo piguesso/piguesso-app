@@ -3,7 +3,6 @@ import TextStyles from "@/utils/textstyles";
 import { SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Suspense } from "react";
 
 interface NavLinkProps {
   href: string;
@@ -18,13 +17,6 @@ export default function NavLink({ href, lable, children }: NavLinkProps) {
       <div className="w-full h-full">
         <Link href={href} className="w-full h-full">
           <div className="w-full h-full p-1">
-            <Suspense
-              fallback={
-                <div className="w-full h-full rounded-full bg-primary">
-                  {children}
-                </div>
-              }
-            >
               {href === "/profile" && (
                 <SignedOut>
                   <div className="w-full rounded-full bg-primary">
@@ -32,7 +24,6 @@ export default function NavLink({ href, lable, children }: NavLinkProps) {
                   </div>
                 </SignedOut>
               )}
-            </Suspense>
             {children}
             <div className={TextStyles.LinkText}>{lable}</div>
           </div>

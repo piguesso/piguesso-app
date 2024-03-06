@@ -17,7 +17,7 @@ export default function ColorControls({ setColor, clear }: ColorControlsProps) {
   const [selectedColor, setSelectedColor] = useState("black");
   const [selectedTool, setSelectedTool] = useState("pen");
 
-  if (!pathname.includes("/draw")) {
+  if (!pathname.includes("/train")) {
     return null;
   }
 

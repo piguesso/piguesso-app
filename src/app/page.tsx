@@ -4,14 +4,17 @@ import TextStyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
 import DrawLink from "@/components/draw-link";
 import DynamicIsland from "@/components/navigation/nav-bar";
+import { SignIn, currentUser } from "@clerk/nextjs";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
 interface homeProps {}
+export default async function Home() {
 
-/*
-<SignInButton />
-*/
+  const user = await currentUser();
+  if (!user) {
+    return <SignIn />;
+  }
 
-export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center p-24 gap-8">
       <div className={TextStyles.H2}>Welcome to </div>
@@ -24,7 +27,7 @@ export default function Home() {
         Piguesso
       </div>
       <DrawLink />
-      <DynamicIsland />
+      <DynamicIsland UserImageUrl={user.imageUrl} UserTag={user.username ?? undefined} />
     </main>
   );
 }

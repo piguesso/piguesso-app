@@ -3,7 +3,7 @@ import DynamicIsland from "@/components/navigation/nav-bar";
 export default function Page() {
   return (
     <div className="w-full h-full bg-primary">
-      <DynamicIsland />
+      <h1>Page</h1>
     </div>
   );
 }

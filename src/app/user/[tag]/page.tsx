@@ -11,34 +11,33 @@ import ProfileNavigation from "./profileNavigation";
 import StatisticsTab from "./tabs/statistics";
 import GamesTab from "./tabs/games";
 import FriendsTab from "./tabs/friends";
+import { currentUser } from "@clerk/nextjs";
 
-export default async function Page({ params }: { params: { tag: string } }) {
-  const [user, ..._] = await db
-    .select()
-    .from(users)
-    .where(eq(users.tag, params.tag))
-    .execute();
+interface UserProfileProps {
+  params: { tag: string };
+}
+
+export default async function Page({ params }: UserProfileProps) {
+  const user = await db.query.users.findFirst({
+    where: eq(users.tag, params.tag)
+  });
+
   if (!user) {
+    console.log("no user");
     redirect("/");
   }
 
-  let clerkUser = null;
-  try {
-    clerkUser = await clerkClient.users.getUser(user.clerkId);
-  } catch (e) {
-    console.error(e);
+  const clerkUser = await currentUser();
+
+  if (!clerkUser || (clerkUser.id !== user.clerkId)) {
+    console.log("no clerk user");
     redirect("/");
   }
 
-  if (!clerkUser) {
-    redirect("/");
-  }
+  const scoring = await db.query.playerScoring.findFirst({
+    where: eq(playerScoring.playerId, user.clerkId)
+  });
 
-  const [scoring, ...__] = await db
-    .select()
-    .from(playerScoring)
-    .where(eq(playerScoring.playerId, user.clerkId))
-    .execute();
   if (!scoring) {
     redirect("/");
   }

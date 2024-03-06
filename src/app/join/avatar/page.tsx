@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs";
+import { currentUser, redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { users } from "@/db/schema/user";
@@ -10,7 +10,6 @@ import { Rating } from "@mui/material";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import { submit } from "@/app/join/form-actions";
 import UserJoinForm from "@/app/join/user-join-form";
-import { playerScoring } from "@/db/schema/scoring";
 
 export default async function Page() {
   const User = await currentUser();
@@ -24,8 +23,7 @@ export default async function Page() {
   });
 
   if (!userExists) {
-    await db.insert(users).values({ clerkId: User.id, tag: User.username, biography: "NewBio" });
-    await db.insert(playerScoring).values({ playerId: User.id, gamesPlayed: 0, gamesWon: 0 });
+    redirectToSignIn();
   } else {
     redirect("/");
   }
