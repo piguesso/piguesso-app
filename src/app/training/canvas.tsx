@@ -12,14 +12,14 @@ import { redirect } from "next/navigation";
 import { Button } from "@mui/material";
 
 interface CanvasProps {
-  UserId: string;
+  UserTag: string;
   UserImageUrl: string;
 
 }
 
 const skribble = new Skribble();
 
-export default function Canvas({UserId, UserImageUrl}: CanvasProps) {
+export default function Canvas({UserTag, UserImageUrl}: CanvasProps) {
   let timeOfLastPoint = 0;
   const [color, setColor] = useState<string>("#000000");
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
@@ -58,7 +58,7 @@ export default function Canvas({UserId, UserImageUrl}: CanvasProps) {
     // draw a bunch of quadratics, using the average of two points as the control point
     let i;
     for (i = 1; i < points.length - 2; i++) {
-      var c = (points[i].x + points[i + 1].x) / 2,
+      let c = (points[i].x + points[i + 1].x) / 2,
         d = (points[i].y + points[i + 1].y) / 2;
       ctx.quadraticCurveTo(points[i].x, points[i].y, c, d);
       ctx.quadraticCurveTo(
@@ -79,9 +79,8 @@ export default function Canvas({UserId, UserImageUrl}: CanvasProps) {
     if (skribble.isValid()) {
       skribble.normalize();
       skribble.uniform_scale();
-      skribble.print();
       skribble.resampleOnePixelSpacing();
-      const path = skribble.simplify(2.0);
+      const path = skribble.simplify(1.0);
       console.log(path);
     }
   }
@@ -92,19 +91,15 @@ export default function Canvas({UserId, UserImageUrl}: CanvasProps) {
   };
 
   return (
-    <div className="w-full h-full bg-white flex justify-center items-center overflow-clip" >
-      <div className="flex flex-col gap-10 pr-10"></div>
+    <div className="w-full h-full flex justify-center items-center overflow-clip bg-primary" >
       <canvas
         ref={canvasRef}
         onMouseDown={onMouseDown}
         onMouseUp={handleMouseUp}
         width={(size.width || 0) * 0.8}
         height={(size.height || 0) * 0.8}
-        className="border border-black rounded-md"
+        className={"bg-white shadow-2xl border-2 border-black rounded-md"}
       />
-      <Button onClick={submit}>
-        Submit
-      </Button>
       <div
         className={
           "w-full h-20 sm:w-fit bg-surface fixed sm:absolute bottom-0 sm:bottom-10 mx-auto left-0 right-0 rounded-none sm:rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] px-12"
@@ -112,7 +107,7 @@ export default function Canvas({UserId, UserImageUrl}: CanvasProps) {
       >
         <div className="max-w-fit h-full flex">
           <ColorControls setColor={setColor} clear={handleClear} />
-          <Navbar UserImageUrl={UserImageUrl}/>
+          <Navbar UserImageUrl={UserImageUrl} UserTag={UserTag}/>
         </div>
       </div>
     </div>

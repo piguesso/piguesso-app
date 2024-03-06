@@ -16,7 +16,7 @@ export default function DynamicIsland(props: DynamicIslandProps) {
   return (
     <div
       className={
-        "h-20 min-w-10 sm:w-fit bg-surface fixed sm:absolute bottom-0 sm:bottom-10 mx-auto left-0 right-0 rounded-none sm:rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] px-12"
+        "h-20 min-w-10 w-fit bg-surface absolute bottom-0 sm:bottom-10 mx-auto left-0 right-0 rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] px-12"
       }
     >
       <div className="max-w-fit h-full flex">
@@ -45,7 +45,7 @@ export function Navbar(props: NavbarProps) {
             <SearchOutlinedIcon />
           </NavLink>
         </li>
-        <li className="mx-4 text-center w-1/3 min-w-[50px] flex">
+        <li className="mx-4 text-center w-1/3 min-w-[50px]">
           <NavLink href={props.UserImageUrl ? `/user/${props.UserTag}` : ""} lable={"Profile"}>
             {props.UserImageUrl && props.UserTag &&
               <SignedIn>

@@ -33,8 +33,8 @@ export default function ProfileNavigation({
           variant="fullWidth"
           value={activeTab}
           onChange={(_, val) => setActiveTab(val)}
-          textColor="secondary"
-          indicatorColor="secondary"
+          textColor="inherit"
+          indicatorColor="primary"
         >
           <Tab
             className={getTabStyling(0)}

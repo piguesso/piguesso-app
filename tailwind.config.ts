@@ -49,7 +49,7 @@ module.exports = {
         primary: "#AE6DF5",
         border: "#3B3C36",
         white: "#FDFDFD",
-        background: "#151515",
+        background: "#171717",
         black: "#151515",
         surface: "#3A3E41",
         grey: "#A0A0A0",

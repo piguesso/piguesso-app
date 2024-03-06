@@ -16,10 +16,10 @@ export default function NavLink({ href, lable, children }: NavLinkProps) {
     return (
       <div className="w-full h-full">
         <Link href={href} className="w-full h-full">
-          <div className="w-full h-full p-1">
+          <div className="w-full h-full p-1 flex flex-col items-center">
               {href === "/profile" && (
                 <SignedOut>
-                  <div className="w-full rounded-full bg-primary">
+                  <div className="w-full flex rounded-full">
                     {children}
                   </div>
                 </SignedOut>

@@ -1,32 +1,34 @@
-import Image from "next/image";
-// import { SignIn, SignInButton } from "@clerk/nextjs";
-import TextStyles from "@/utils/textstyles";
+import textstyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
-import DrawLink from "@/components/draw-link";
+import DrawLink, { AboutLink, GithubLink } from "@/components/draw-link";
 import DynamicIsland from "@/components/navigation/nav-bar";
-import { SignIn, currentUser } from "@clerk/nextjs";
-import { imageConfigDefault } from "next/dist/shared/lib/image-config";
+import { currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
-interface homeProps {}
 export default async function Home() {
 
   const user = await currentUser();
   if (!user) {
-    return <SignIn />;
+    return redirect("/sign-in");
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 gap-8">
-      <div className={TextStyles.H2}>Welcome to </div>
-      <div
-        className={twMerge(
-          TextStyles.H2Gradient,
-          "bg-gradient-to-r from-purple-400 to-yellow-400 pb-6",
-        )}
-      >
-        Piguesso
+    <main
+      // className="flex min-h-screen flex-col items-center gap-8 bg-gray w-full h-full bg-gradient-to-r from-primary to-warning background-animate">
+      className="flex min-h-screen flex-col items-center gap-8 bg-gray w-full h-full">
+      <div className={twMerge(textstyles.H1, "h-full flex flex-col items-center justify-center")}>
+        <div>
+          Welcome to
+        </div>
+        <div className={"mb-20"}>
+          Piguesso
+        </div>
+        <div className={"flex flex-col md:flex-row gap-6"}>
+          <DrawLink />
+          <AboutLink />
+          <GithubLink />
+        </div>
       </div>
-      <DrawLink />
       <DynamicIsland UserImageUrl={user.imageUrl} UserTag={user.username ?? undefined} />
     </main>
   );

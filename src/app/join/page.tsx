@@ -23,11 +23,13 @@ export default async function Page() {
     where: eq(users.clerkId, User.id)
   });
 
-  if (!userExists) {
-    await db.insert(users).values({ clerkId: User.id, tag: User.username, biography: "NewBio" });
-    await db.insert(playerScoring).values({ playerId: User.id, gamesPlayed: 0, gamesWon: 0 });
-  } else {
-    redirect("/");
+  console.log(userExists)
+
+  !userExists && await db.insert(users).values({ clerkId: User.id, tag: User.username, biography: "NewBio" }).onConflictDoNothing();
+  !userExists && await db.insert(playerScoring).values({ playerId: User.id, gamesPlayed: 0, gamesWon: 0 }).onConflictDoNothing();
+
+  if (userExists && userExists.biography !== "NewBio" && userExists?.biography) {
+    return redirect("/")
   }
 
   return (

@@ -52,15 +52,6 @@ export default function ColorControls({ setColor, clear }: ColorControlsProps) {
         >
           <i className="fa-solid fa-pen"></i>
         </div>
-        <div
-          className={twMerge(
-            "w-8 h-8 mx-2 bg-lightgrey/50 border-white border-2 rounded-full flex items-center justify-center cursor-pointer",
-            selectedTool === "eraser" && "rounded-md",
-          )}
-          onClick={() => setSelectedTool("eraser")}
-        >
-          <i className="fa-solid fa-eraser"></i>
-        </div>
         {colors.map((color) => (
           <div
             key={color}

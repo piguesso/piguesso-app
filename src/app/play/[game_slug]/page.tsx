@@ -19,7 +19,7 @@ export default async function page({ params }: introProps) {
 
   return (
     <div className={"w-full h-full bg-primary overflow-clip"}>
-      <TimedRedirectAfterScreen time={TIME_TILL_START} href={"/drawing"}>
+      <TimedRedirectAfterScreen time={TIME_TILL_START} href={"/training"}>
         <GameStart time={TIME_TILL_START} />
       </TimedRedirectAfterScreen>
       <DynamicIsland UserImageUrl={user.imageUrl} UserTag={user.username ?? undefined}/>

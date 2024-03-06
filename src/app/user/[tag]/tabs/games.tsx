@@ -13,7 +13,7 @@ export default async function GamesTab({ playerId }: { playerId: string }) {
     .execute();
 
   return (
-    <div>
+    <div className={"w-[90%]"}>
       {fetchedGames.length === 0 && (
         <h1 className="text-center text-xl font-bold">No games found</h1>
       )}

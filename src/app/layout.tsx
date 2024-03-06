@@ -7,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 import NavBar from "@/components/navigation/nav-bar";
 import Script from "next/script";
 import DynamicIsland from "@/components/navigation/nav-bar";
-import { ClerkProvider, currentUser } from "@clerk/nextjs";
+import { ClerkProvider, currentUser, SignIn } from "@clerk/nextjs";
 import { db } from "@/db";
 import { eq } from "drizzle-orm";
 import { users } from "@/db/schema/user";
@@ -23,24 +23,16 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
-  const User = await currentUser();
-  let UserTag;
-  if (User) {
-    UserTag = (await db.query.users.findFirst({
-      where: eq(users.clerkId, User.id),
-    }))?.tag;
-  }
   return (
     <ClerkProvider>
       <html
         lang="en"
         className={twMerge(
-          "h-full w-full overflow-y-scroll bg-primary",
+          "h-full w-full overflow-y-scroll bg-background",
           sono.className,
         )}
       >
-        <body className={"h-full w-full bg-primary overflow-y-scroll"}>
+        <body className={"h-full w-full bg-background overflow-y-scroll"}>
           <Script
             src="https://kit.fontawesome.com/7dfc9e0334.js"
             crossOrigin="anonymous"

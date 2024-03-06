@@ -25,7 +25,7 @@ class Skribble {
   }
 
   update(x: number, y: number) {
-    if (!this.x[this.stroke] || this.x[this.stroke].length < 0) {
+    if (!this.x[this.stroke]) {
       this.x.push([])
       this.y.push([])
     }
@@ -46,7 +46,6 @@ class Skribble {
   }
 
   uniform_scale() {
-    console.log(this.maxX)
     const scalefactorX = this.maxX / 255
     const scalefactorY = this.maxY / 255
 
