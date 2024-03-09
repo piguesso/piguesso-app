@@ -43,6 +43,13 @@
       "when": 1709997470762,
       "tag": "0005_sudden_puff_adder",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1710000442325,
+      "tag": "0006_perpetual_magneto",
+      "breakpoints": true
     }
   ]
 }

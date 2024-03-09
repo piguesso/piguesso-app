@@ -1,0 +1,1 @@
+ALTER TABLE "players" ADD COLUMN "left_game_at" timestamp;

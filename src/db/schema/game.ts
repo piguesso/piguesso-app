@@ -57,6 +57,7 @@ const players = pgTable("players", {
   playerId: varchar("player_id").notNull(),
   gameId: serial("game_id").notNull(),
   is_host: boolean("is_host").default(false),
+  leftGameAt: timestamp("left_game_at"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
