@@ -19,8 +19,6 @@ const games = pgTable("games", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export type InsertGame = InferInsertModel<typeof games>;
-
 export type SelectGame = InferSelectModel<typeof games>;
 export type SelectGames = SelectGame[];
 
@@ -33,28 +31,37 @@ const rounds = pgTable("rounds", {
   endTime: timestamp("end_time").notNull(),
 });
 
-export type InsertRound = InferInsertModel<typeof rounds>;
-export type InsertRounds = InsertRound[];
-
 export type SelectRound = InferSelectModel<typeof rounds>;
 export type SelectRounds = SelectRound[];
 
-const players = pgTable("players", {
+const playerScoringRound = pgTable("player_scoring_round", {
   playerId: varchar("player_id").notNull(),
   gameId: serial("game_id").notNull(),
   score: integer("score").default(0),
-  round: integer("round").default(1),
+  roundId: serial("round_id").notNull(),
   place: integer("place").default(1),
-  isHost: boolean("is_host").default(false),
   isWinner: boolean("is_winner").default(false),
+  timeUsedToComplete: integer("time_used_to_complete").default(0),
+  firstTopic: varchar("first_topic", { length: 100 }),
+  secondTopic: varchar("second_topic", { length: 100 }),
+  thirdTopic: varchar("third_topic", { length: 100 }),
+  hasStoppedGame: boolean("has_stopped_game").default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export type InsertPlayer = InferInsertModel<typeof players>;
-export type InsertPlayers = InsertPlayer[];
+export type SelectPlayerScoringRound = InferSelectModel<typeof playerScoringRound>;
+export type SelectPlayerScoringRounds = SelectPlayerScoringRound[];
+
+const players = pgTable("players", {
+  playerId: varchar("player_id").notNull(),
+  gameId: serial("game_id").notNull(),
+  is_host: boolean("is_host").default(false),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
 
 export type SelectPlayer = InferSelectModel<typeof players>;
 export type SelectPlayers = SelectPlayer[];
 
-export { games, rounds, players, gameState };
+export { games, rounds, players, gameState, playerScoringRound };

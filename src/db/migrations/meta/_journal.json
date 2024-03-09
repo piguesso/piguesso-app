@@ -36,6 +36,13 @@
       "when": 1709649843132,
       "tag": "0004_robust_champions",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1709997470762,
+      "tag": "0005_sudden_puff_adder",
+      "breakpoints": true
     }
   ]
 }
