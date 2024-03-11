@@ -1,5 +1,5 @@
 {
-  "id": "8d0fcc6e-33ed-4a56-9982-34bc0ebfb7b3",
+  "id": "28ce4b84-38d1-4abd-a24f-21ec0008a7b9",
   "prevId": "145bff65-411f-4130-a63f-ce34904e0c4f",
   "version": "5",
   "dialect": "pg",
@@ -75,8 +75,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "players": {
-      "name": "players",
+    "player_scoring_round": {
+      "name": "player_scoring_round",
       "schema": "",
       "columns": {
         "player_id": {
@@ -98,12 +98,11 @@
           "notNull": false,
           "default": 0
         },
-        "round": {
-          "name": "round",
-          "type": "integer",
+        "round_id": {
+          "name": "round_id",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false,
-          "default": 1
+          "notNull": true
         },
         "place": {
           "name": "place",
@@ -112,15 +111,83 @@
           "notNull": false,
           "default": 1
         },
-        "is_host": {
-          "name": "is_host",
+        "is_winner": {
+          "name": "is_winner",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false,
           "default": false
         },
-        "is_winner": {
-          "name": "is_winner",
+        "time_used_to_complete": {
+          "name": "time_used_to_complete",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        },
+        "first_topic": {
+          "name": "first_topic",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "second_topic": {
+          "name": "second_topic",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "third_topic": {
+          "name": "third_topic",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "has_stopped_game": {
+          "name": "has_stopped_game",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "players": {
+      "name": "players",
+      "schema": "",
+      "columns": {
+        "player_id": {
+          "name": "player_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "game_id": {
+          "name": "game_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_host": {
+          "name": "is_host",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false,
@@ -277,36 +344,6 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
-    },
-    "training": {
-      "name": "training",
-      "schema": "",
-      "columns": {
-        "clerk_id": {
-          "name": "clerk_id",
-          "type": "varchar",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "drawing": {
-          "name": "drawing",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "training_clerk_id_unique": {
-          "name": "training_clerk_id_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "clerk_id"
-          ]
-        }
-      }
     },
     "users": {
       "name": "users",
