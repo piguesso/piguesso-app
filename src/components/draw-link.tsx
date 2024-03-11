@@ -5,12 +5,12 @@ import textstyles from "@/utils/textstyles";
 import { Button } from "@mui/material";
 import { twMerge } from "tailwind-merge";
 
-export default function DrawLink() {
+export function PlayLink() {
   return (
     <div className={twMerge("flex flex-col items-center", textstyles.BigHint)}>
-      <Link href="/training">
+      <Link href="/play">
         <Button variant="contained" className={"bg-primary rounded-3xl h-14 w-32"}>
-          Draw
+          Play
         </Button>
       </Link>
     </div>
@@ -35,6 +35,18 @@ export function GithubLink() {
       <Link href="https://www.github.com/piguesso">
         <Button variant="contained" className={"bg-primary rounded-3xl h-14 w-32"}>
           Github
+        </Button>
+      </Link>
+    </div>
+  );
+}
+
+export function TrainingLink() {
+  return (
+    <div className={twMerge("flex flex-col items-center", textstyles.BigHint)}>
+      <Link href="/training">
+        <Button variant="contained" className={"bg-primary rounded-3xl h-14 w-32"}>
+          Training
         </Button>
       </Link>
     </div>

@@ -36,6 +36,76 @@
       "when": 1709649843132,
       "tag": "0004_robust_champions",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1709904266540,
+      "tag": "0005_aberrant_inhumans",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1709975853904,
+      "tag": "0006_stale_hannibal_king",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1709976148612,
+      "tag": "0007_colossal_star_brand",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1709976781456,
+      "tag": "0008_loose_jane_foster",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "5",
+      "when": 1709976804531,
+      "tag": "0009_spicy_cyclops",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1709976986073,
+      "tag": "0010_noisy_bloodaxe",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1709977003678,
+      "tag": "0011_amusing_yellow_claw",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "5",
+      "when": 1709977615632,
+      "tag": "0012_amused_paibok",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "5",
+      "when": 1709978385146,
+      "tag": "0013_brief_stardust",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "5",
+      "when": 1709979837432,
+      "tag": "0014_white_grey_gargoyle",
+      "breakpoints": true
     }
   ]
 }

@@ -10,16 +10,20 @@ import { currentUser } from "@clerk/nextjs";
 import { User } from "@clerk/backend";
 import { redirect } from "next/navigation";
 import { Button } from "@mui/material";
+import cv, { Mat, Rect } from "opencv-ts";
+import { Scalar } from "yaml";
+import { reshape } from "mathjs";
 
 interface CanvasProps {
   UserTag: string;
   UserImageUrl: string;
-
+  UserClerkId: string;
+  submit: (drawing: number[][][], clerkId: string) => void;
 }
 
 const skribble = new Skribble();
 
-export default function Canvas({UserTag, UserImageUrl}: CanvasProps) {
+export default function Canvas({UserTag, UserImageUrl, UserClerkId, submit}: CanvasProps) {
   let timeOfLastPoint = 0;
   const [color, setColor] = useState<string>("#000000");
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
@@ -28,6 +32,7 @@ export default function Canvas({UserTag, UserImageUrl}: CanvasProps) {
   const size = useWindowSize();
 
   const handleMouseUp = () => {
+    skribble.fillStroke(points);
     setPoints([])
     skribble.setStroke(skribble.getStroke()+1)
   }
@@ -75,13 +80,22 @@ export default function Canvas({UserTag, UserImageUrl}: CanvasProps) {
     skribble.update(currXInt, currYInt);
   }
 
-  const submit = () => {
+  const handleSubmit = () => {
+    console.log("OpenCV is ready")
+    const src = cv.imread("inputCanvas");
+
+    const dst: Mat = new cv.Mat(80, 80, cv.CV_8S, new cv.Scalar(255));
+    console.log(dst.rows)
+    cv.resize(src, dst, new cv.Size(80, 80), 0, 0, cv.INTER_AREA);
+    console.log(dst)
+    const numberDst:number[] = [];
+    dst.data32S.forEach((x) => numberDst.push(x));
+    const data = numberDst.map((x) => x === 0 ? 255 : 0);
+
+    // reshape dst.data32S from 80 to 80x80x1
+    const dataReshaped:any = reshape(data as unknown as number[], [80, 80, 1]);
     if (skribble.isValid()) {
-      skribble.normalize();
-      skribble.uniform_scale();
-      skribble.resampleOnePixelSpacing();
-      const path = skribble.simplify(1.0);
-      console.log(path);
+      submit(dataReshaped, UserClerkId);
     }
   }
 
@@ -91,7 +105,7 @@ export default function Canvas({UserTag, UserImageUrl}: CanvasProps) {
   };
 
   return (
-    <div className="w-full h-full flex justify-center items-center overflow-clip bg-primary" >
+    <div className="w-full h-full flex justify-center items-center bg-primary" >
       <canvas
         ref={canvasRef}
         onMouseDown={onMouseDown}
@@ -99,6 +113,7 @@ export default function Canvas({UserTag, UserImageUrl}: CanvasProps) {
         width={(size.width || 0) * 0.8}
         height={(size.height || 0) * 0.8}
         className={"bg-white shadow-2xl border-2 border-black rounded-md"}
+        id={"inputCanvas"}
       />
       <div
         className={
@@ -108,6 +123,7 @@ export default function Canvas({UserTag, UserImageUrl}: CanvasProps) {
         <div className="max-w-fit h-full flex">
           <ColorControls setColor={setColor} clear={handleClear} />
           <Navbar UserImageUrl={UserImageUrl} UserTag={UserTag}/>
+          <Button onClick={handleSubmit}>Submit</Button>
         </div>
       </div>
     </div>

@@ -1,12 +1,11 @@
 import textstyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
-import DrawLink, { AboutLink, GithubLink } from "@/components/draw-link";
+import { PlayLink, AboutLink, GithubLink, TrainingLink } from "@/components/draw-link";
 import DynamicIsland from "@/components/navigation/nav-bar";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-
+import * as tf from '@tensorflow/tfjs';
 export default async function Home() {
-
   const user = await currentUser();
   if (!user) {
     return redirect("/sign-in");
@@ -24,9 +23,10 @@ export default async function Home() {
           Piguesso
         </div>
         <div className={"flex flex-col md:flex-row gap-6"}>
-          <DrawLink />
+          <PlayLink />
           <AboutLink />
           <GithubLink />
+          <TrainingLink />
         </div>
       </div>
       <DynamicIsland UserImageUrl={user.imageUrl} UserTag={user.username ?? undefined} />

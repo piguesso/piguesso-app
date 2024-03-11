@@ -1,0 +1,1 @@
+ALTER TABLE "training" ALTER COLUMN "drawing" SET DATA TYPE jsonb;

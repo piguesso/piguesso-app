@@ -1,6 +1,6 @@
 import { simplifyPath } from "./rdp";
-
 class Skribble {
+  private drawing: number[][][];
   private x: number[][];
   private y: number[][];
   private minX: number;
@@ -17,6 +17,7 @@ class Skribble {
     this.maxX = -Infinity;
     this.maxY = -Infinity
     this.stroke = 0;
+    this.drawing = [];
   }
 
   print() {
@@ -41,16 +42,25 @@ class Skribble {
   }
 
   normalize() {
+    console.log("pre-normalize: ", this.x, this.y);
+    console.log("minX: ", this.minX);
+    console.log("minY: ", this.minY);
+    console.log("maxX: ", this.maxX);
+    console.log("maxY: ", this.maxY);
+    console.log(this.x.filter((x0) => x0.find((x1) => x1 === this.maxX)));
     this.x = this.x.map((x0) => x0.map((x1) => x1 - this.minX));
     this.y = this.y.map((y0) => y0.map((y1) => y1 - this.minY));
+    console.log("post-normalize: ", this.x, this.y);
   }
 
   uniform_scale() {
-    const scalefactorX = this.maxX / 255
-    const scalefactorY = this.maxY / 255
+    const scaleFactor = this.maxX > this.maxY ? 255 /this.maxX : 255 / this.maxY;
+    console.log("scaleFactor: ", scaleFactor);
+    console.log("maxX: ", this.maxX);
+    console.log("maxY: ", this.maxY);
 
-    this.x = this.x.map((x0) => x0.map((x1) => x1 / scalefactorX))
-    this.y = this.y.map((y0) => y0.map((y1) => y1 / scalefactorY))
+    this.x = this.x.map((x0) => x0.map((x1) => x1 * scaleFactor))
+    this.y = this.y.map((y0) => y0.map((y1) => y1 * scaleFactor))
   }
 
   resampleOnePixelSpacing() {
@@ -78,11 +88,10 @@ class Skribble {
       });
     });
 
-    const simplifiedPoints = points.map((point) => {
-      return simplifyPath(point, tolerance);
-    }
+    return points.map((point) => {
+        return simplifyPath(point, tolerance);
+      }
     );
-    return simplifiedPoints;
   }
 
     clear() {
@@ -120,8 +129,32 @@ class Skribble {
       return this.stroke
     }
 
-    setStroke(stroke : number) {
+    getDrawing() {
+      return this.drawing
+    }
+
+  setStroke(stroke : number) {
       this.stroke = stroke
+    }
+
+    fillStroke(points: Point[]) {
+      const xForCurrentStroke:number[] = [];
+      const yForCurrentStroke:number[] = [];
+      points.map((point) => {
+        xForCurrentStroke.push(point.x);
+        yForCurrentStroke.push(point.y);
+        if (point.x < this.minX) this.minX = point.x;
+        if (point.y < this.minY) this.minY = point.y;
+        if (point.x > this.maxX) this.maxX = point.x;
+        if (point.y > this.maxY) this.maxY = point.y;
+      });
+      this.drawing.push([xForCurrentStroke, yForCurrentStroke ]);
+    }
+
+    toModelInput() {
+      return this.x.map((x0, index0) => {
+        return [x0, this.y[index0]];
+      });
     }
 
     isValid() {

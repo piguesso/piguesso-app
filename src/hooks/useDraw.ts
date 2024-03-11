@@ -9,6 +9,7 @@ export const useDraw = (
   const prevPoint = useRef<null | Point>(null);
 
   const onMouseDown = () => setMouseDown(true);
+  const onTouchStart = () => setMouseDown(true);
 
   const clear = () => {
     const canvas = canvasRef.current;
@@ -32,15 +33,20 @@ export const useDraw = (
       prevPoint.current = currentPoint;
     };
 
-    const computePointInCanvas = (e: MouseEvent) => {
+    const computePointInCanvas = (e: TouchEvent | MouseEvent) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
 
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      return { x, y };
+      if ("touches" in e) {
+        const x = e.touches[0].clientX - rect.left;
+        const y = e.touches[0].clientY - rect.top;
+        return { x, y };
+      } else {
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        return { x, y };
+      }
     };
 
     const mouseUpHandler = () => {
@@ -60,5 +66,5 @@ export const useDraw = (
     };
   }, [onDraw, mouseDown]);
 
-  return { canvasRef, onMouseDown, clear };
+  return { canvasRef, onMouseDown, onTouchStart, clear };
 };
