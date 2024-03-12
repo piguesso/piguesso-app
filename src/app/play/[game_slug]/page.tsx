@@ -3,6 +3,8 @@ import TimedRedirectAfterScreen from "@/components/game/timed-redirect-after-scr
 import DynamicIsland from "@/components/navigation/nav-bar";
 import { SignIn, currentUser } from "@clerk/nextjs";
 import Game from "./game"
+import GameCanvas from "@/app/play/[game_slug]/game-canvas";
+import submit from "@/app/play/[game_slug]/submit";
 
 interface introProps {
   params: {
@@ -18,9 +20,6 @@ export default async function page({ params }: introProps) {
   }
 
   return (
-    <div className={"w-full h-full bg-black overflow-clip"}>
-      <Game gameSlug={params.game_slug}/>
-      <DynamicIsland UserImageUrl={user.imageUrl} UserTag={user.username ?? undefined}/>
-    </div>
+      <Game gameSlug={params.game_slug} currentUserAvatar={user.imageUrl} currentUserId={user.id} currentUserName={user.username ?? "Guest"} />
   );
 }

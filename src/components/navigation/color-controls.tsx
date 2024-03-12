@@ -1,6 +1,5 @@
 "use client";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -17,7 +16,7 @@ export default function ColorControls({ setColor, clear }: ColorControlsProps) {
   const [selectedColor, setSelectedColor] = useState("black");
   const [selectedTool, setSelectedTool] = useState("pen");
 
-  if (!pathname.includes("/train")) {
+  if (!pathname.includes("/train") && !pathname.includes("/play")) {
     return null;
   }
 
@@ -26,7 +25,7 @@ export default function ColorControls({ setColor, clear }: ColorControlsProps) {
       ? "#000"
       : selectedColor == "primary"
         ? "#AE6DF5"
-        : "#00C896",
+        : "#00C896"
   );
 
   return (
@@ -35,7 +34,7 @@ export default function ColorControls({ setColor, clear }: ColorControlsProps) {
         <div
           className={twMerge(
             "w-8 h-8 mx-2 bg-lightgrey/50 border-white border-2 rounded-full flex items-center justify-center cursor-pointer",
-            selectedTool === "trash" && "rounded-md",
+            selectedTool === "trash" && "rounded-md"
           )}
           onMouseDown={() => setSelectedTool("trash")}
           onMouseUp={() => setSelectedTool("pen")}
@@ -46,25 +45,37 @@ export default function ColorControls({ setColor, clear }: ColorControlsProps) {
         <div
           className={twMerge(
             "w-8 h-8 mx-2 bg-lightgrey/50 border-white border-2 rounded-full flex items-center justify-center cursor-pointer",
-            selectedTool === "pen" && "rounded-md",
+            selectedTool === "pen" && "rounded-md"
           )}
           onClick={() => setSelectedTool("pen")}
         >
           <i className="fa-solid fa-pen"></i>
         </div>
-        {colors.map((color) => (
-          <div
-            key={color}
-            className={twMerge(
-              "w-8 h-8 mx-2 bg-primary bg-secondary bg-black",
-              `bg-${color}`,
-              selectedColor === color ? "rounded-md" : "rounded-full",
-              "cursor-pointer",
-              "animate-circle-to-rounded",
-            )}
-            onClick={() => setSelectedColor(color)}
-          />
-        ))}
+        <div className={"hidden sm:flex"}>
+          {colors.map((color) => (
+            <div
+              key={color}
+              className={twMerge(
+                "w-8 h-8 mx-2 bg-primary bg-secondary bg-black",
+                `bg-${color}`,
+                selectedColor === color ? "rounded-md" : "rounded-full",
+                "cursor-pointer",
+                "animate-circle-to-rounded"
+              )}
+              onClick={() => setSelectedColor(color)}
+            />
+          ))}
+        </div>
+        <div
+          className={twMerge(
+            "block sm:hidden w-8 h-8 mx-2 bg-black",
+            `bg-black`,
+            selectedColor === "black" ? "rounded-md" : "rounded-full",
+            "cursor-pointer",
+            "animate-circle-to-rounded"
+          )}
+          onClick={() => setSelectedColor("black")}
+        />
       </div>
       <div className="h-[80%] w-[1px] bg-gray-300 my-auto mx-2" />
     </div>

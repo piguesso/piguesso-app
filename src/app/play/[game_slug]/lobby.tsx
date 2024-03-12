@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import TextStyles from "@/utils/textstyles";
-import Canvas from "@/app/training/canvas";
 import LobbyCanvas from "@/app/play/[game_slug]/lobby-canvas";
-import ColorControls from "@/components/navigation/color-controls";
 
 interface LobbyProps {
   gameSlug: string;
