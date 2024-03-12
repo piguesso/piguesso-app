@@ -3,7 +3,11 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
 import TextStyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
-import { Button } from "@mui/material";
+import { Button, Input } from "@mui/material";
+import { db } from "@/db";
+import { games } from "@/db/schema/game";
+import { eq } from "drizzle-orm";
+import { CreateGame, JoinGame } from "@/app/play/join-create-games";
 
 export default async function Page() {
   const user = await currentUser();
@@ -13,9 +17,9 @@ export default async function Page() {
 
   return (
     <div className={"w-full h-full py-10 overflow-hidden"}>
-      <div className={"flex flex-col w-[90%] gap-6 mx-auto"}>
+      <div className={"flex flex-col w-[90%] gap-10 mx-auto"}>
         <h1 className={twMerge(TextStyles.H2, "text-center")}>Create or Join a Game</h1>
-        <div className={"flex flex-col gap-4 items-center"}>
+        <div className={"flex flex-col gap-8 items-center"}>
           <CreateGame clerkId={user.id} />
           <JoinGame />
         </div>
@@ -26,32 +30,3 @@ export default async function Page() {
 }
 
 
-interface createGameProps {
-  clerkId: string;
-}
-
-function CreateGame({ clerkId }: createGameProps) {
-  return (
-    <div className={"w-[80%] bg-primary rounded-2xl p-8 flex flex-col gap-4"}>
-      <h2 className={twMerge(TextStyles.H3, "text-center")}>Create Game</h2>
-      <div className={twMerge(TextStyles.BigText, "text-center")}>Create a game with your parameters and invite
-        friends
-      </div>
-      <Button variant={"contained"}>
-        Create Game
-      </Button>
-    </div>
-  );
-}
-
-function JoinGame() {
-  return (
-    <div className={"w-[80%] bg-primary rounded-2xl p-8 flex flex-col gap-4"}>
-      <h2 className={twMerge(TextStyles.H3, "text-center")}>Quick Play</h2>
-      <div className={twMerge(TextStyles.BigText, "text-center")}>Join a Game with the Game Code.</div>
-      <Button>
-        Create Game
-      </Button>
-    </div>
-  );
-}
