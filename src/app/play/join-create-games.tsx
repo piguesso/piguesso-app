@@ -35,6 +35,7 @@ export function JoinGame() {
   };
 
   const handleJoin = () => {
+    if (!gameCode) return;
     joinGame(gameCode);
   };
 
