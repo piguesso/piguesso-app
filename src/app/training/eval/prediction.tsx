@@ -1,44 +1,24 @@
 "use client";
 
-import { LayersModel } from "@tensorflow/tfjs";
 import { useEffect, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
-import * as core from "@tensorflow/tfjs-core";
-import fetchModel from "@/app/training/eval/fetch-model";
-import { Button } from "@mui/material";
 
-interface PredictionProps {
-  trainingData: number[][][];
-}
+export default function ModelComponent() {
+  const [model, setModel] = useState(null);
 
-export default function Prediction({ trainingData }: PredictionProps) {
-  // const [model, setModel] = useState<LayersModel | null>(null);
-  let model: LayersModel | null = null;
-
-  const MODEL_URL = 'https://storage.googleapis.com/piguesso-classifier/model/model.json';
-
-  const handleClick = async () => {
-    model = await fetchModel();
-    if (!model) {
-      console.log('Model not found');
-      return (
-        <div>
-          <h1>Model not found</h1>
-        </div>
-      )
+  useEffect(() => {
+    async function loadModel() {
+      // const model = await tf.loadLayersModel('/model/model.json');
+      // @ts-ignore
+      setModel(model);
     }
-    try {
-      await model.save('localstorage://model');
-    } catch (error) {
-      console.error('Error saving model:', error);
-    }
-  };
+    loadModel();
+  }, []);
 
+  // Use the predict function as needed in your component
   return (
     <div>
-      <Button onClick={handleClick}>
-        Load Model
-      </Button>
+      Model loaded: {model ? 'Yes' : 'No'}
     </div>
   );
 }

@@ -8,6 +8,7 @@ import Prediction from "@/app/training/eval/prediction";
 import { list } from "@vercel/blob"
 import * as tf from "@tensorflow/tfjs";
 import * as core from "@tensorflow/tfjs-core";
+import * as tfn from "@tensorflow/tfjs-node";
 
 export default async function page() {
   const user = await currentUser();
@@ -23,28 +24,18 @@ export default async function page() {
     return <Canvas UserImageUrl={user.imageUrl} UserTag={user.username ?? ""} UserClerkId={user.id} submit={submit}/>;
   }
 
-  const response = await list();
-  const modelDownloadUrl = response.blobs.find((item) => item.pathname === "model/model.json")?.downloadUrl;
-  if (!modelDownloadUrl) {
-    return null;
-  }
-  const model = await tf.loadLayersModel(modelDownloadUrl);
-  if (!model) {
-    return null;
-  }
-
-  const prediction = model.predict(core.tensor([trainingData.drawing.data]));
-  const predArray = (prediction as core.Tensor2D).arraySync()[0] as number[];
-  let max = predArray[0];
-  let maxIndex = 0;
-  for (let i = 1; i < predArray.length; i++) {
-    if (predArray[i] > max) {
-      maxIndex = i;
-      max = predArray[i];
-    }
-  }
-
-  console.log(maxIndex, max);
+  // const prediction = model.predict(core.tensor([trainingData.drawing.data]));
+  // const predArray = (prediction as core.Tensor2D).arraySync()[0] as number[];
+  // let max = predArray[0];
+  // let maxIndex = 0;
+  // for (let i = 1; i < predArray.length; i++) {
+  //   if (predArray[i] > max) {
+  //     maxIndex = i;
+  //     max = predArray[i];
+  //   }
+  // }
+  //
+  // console.log(maxIndex, max);
 
 
   return (

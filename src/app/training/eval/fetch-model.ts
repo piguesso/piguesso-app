@@ -1,15 +1,10 @@
-"use server";
-
-import { list } from "@vercel/blob";
 import * as tf from "@tensorflow/tfjs";
-
-
+import * as tfn from "@tensorflow/tfjs-node";
 
 export default async function fetchModel() {
-  const response = await list();
-  const modelDownloadUrl = response.blobs.find((item) => item.pathname === "model/model.json")?.downloadUrl;
-  if (!modelDownloadUrl) {
-    return null;
-  }
-  return (await tf.loadLayersModel(modelDownloadUrl));
+  const tfndreq = require("@tensorflow/tfjs-node")
+  const tfreq = require("@tensorflow/tfjs")
+  const modelLoadHandler = tfndreq.io.fileSystem("../../../model/model.json");
+  const model = await tfreq.loadLayersModel(modelLoadHandler)
+  return model
 }
