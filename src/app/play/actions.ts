@@ -16,7 +16,7 @@ export const createGame = async (clerkId: string): Promise<{id: number}> => {
     is_host: true,
   });
 
-  return game_id[0];
+  return redirect(`/play/${game_id[0].id}`);
 }
 
 export const joinGame = (slug: number) => {

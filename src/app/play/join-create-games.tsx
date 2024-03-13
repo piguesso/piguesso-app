@@ -18,9 +18,7 @@ export function CreateGame({ clerkId }: createGameProps) {
 
   const handleCreateGame = () => {
     setIsLoading(true);
-    createGame(clerkId).then((game_id) => {
-      redirect(`/play/${game_id.id}`);
-    }).finally(() => {
+    createGame(clerkId).finally(() => {
       setIsLoading(false);
     });
   }
