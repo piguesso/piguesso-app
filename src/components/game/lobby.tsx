@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import TextStyles from "@/utils/textstyles";
-import LobbyCanvas from "@/app/play/[game_slug]/lobby-canvas";
+import LobbyCanvas from "@/components/game/lobby-canvas";
 
 interface LobbyProps {
   gameSlug: string;
@@ -20,14 +20,13 @@ export default function Lobby({ gameSlug }: LobbyProps) {
 
   useEffect(() => {
     // get current players in Lobby by Gameslug or something
-    const gs = gameSlug;
   }, [players]);
 
   return (
     <div className={"w-full h-full bg-back p-6"}>
       <div className={"w-full flex flex-col gap-3"}></div>
       <div className={twMerge(TextStyles.H2, "text-center")}>Lobby</div>
-      <div className={twMerge(TextStyles.H4, "text-center")}>Don't go anywhere the game will start soon!</div>
+      <div className={twMerge(TextStyles.H4, "text-center")}>Don&apos;t go anywhere the game will start soon!</div>
       <div className={twMerge(TextStyles.BigText, "text-center")}>Game Code: {gameSlug}</div>
       <div className={"w-[90%] h-2/3 flex mt-32 content-center mx-auto lg:gap-12 lg:border-2 rounded-3xl lg:p-10"}>
         <div className={"flex flex-col gap-3 h-full overflow-y-scroll mx-auto"}>

@@ -1,10 +1,5 @@
-import GameStart from "@/components/game/game-start";
-import TimedRedirectAfterScreen from "@/components/game/timed-redirect-after-screen";
-import DynamicIsland from "@/components/navigation/nav-bar";
 import { SignIn, currentUser } from "@clerk/nextjs";
-import Game from "./game"
-import GameCanvas from "@/app/play/[game_slug]/game-canvas";
-import submit from "@/app/play/[game_slug]/submit";
+import Game from "../../../components/game/game"
 
 interface introProps {
   params: {

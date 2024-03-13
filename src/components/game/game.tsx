@@ -3,8 +3,8 @@
 
 // State
 
-import Lobby from "@/app/play/[game_slug]/lobby";
-import GameCanvas from "@/app/play/[game_slug]/game-canvas";
+import Lobby from "@/components/game/lobby";
+import GameCanvas from "@/components/game/game-canvas";
 import submit from "@/app/play/[game_slug]/submit";
 import { currentUser } from "@clerk/nextjs";
 

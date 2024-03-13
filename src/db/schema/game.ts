@@ -21,6 +21,8 @@ const games = pgTable("games", {
 
 export type SelectGame = InferSelectModel<typeof games>;
 export type SelectGames = SelectGame[];
+export type InsertGame = InferInsertModel<typeof games>;
+export type InsertGames = InsertGame[];
 
 const rounds = pgTable("rounds", {
   id: serial("id").primaryKey(),
@@ -33,6 +35,8 @@ const rounds = pgTable("rounds", {
 
 export type SelectRound = InferSelectModel<typeof rounds>;
 export type SelectRounds = SelectRound[];
+export type InsertRound = InferInsertModel<typeof rounds>;
+export type InsertRounds = InsertRound[];
 
 const playerScoringRound = pgTable("player_scoring_round", {
   playerId: varchar("player_id").notNull(),
@@ -52,6 +56,8 @@ const playerScoringRound = pgTable("player_scoring_round", {
 
 export type SelectPlayerScoringRound = InferSelectModel<typeof playerScoringRound>;
 export type SelectPlayerScoringRounds = SelectPlayerScoringRound[];
+export type InsertPlayerScoringRound = InferInsertModel<typeof playerScoringRound>;
+export type InsertPlayerScoringRounds = InsertPlayerScoringRound[];
 
 const players = pgTable("players", {
   playerId: varchar("player_id").notNull(),
@@ -64,5 +70,7 @@ const players = pgTable("players", {
 
 export type SelectPlayer = InferSelectModel<typeof players>;
 export type SelectPlayers = SelectPlayer[];
+export type InsertPlayer = InferInsertModel<typeof players>;
+export type InsertPlayers = InsertPlayer[];
 
 export { games, rounds, players, gameState, playerScoringRound };
