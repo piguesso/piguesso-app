@@ -1,22 +1,25 @@
 "use server";
 
 import { db } from "@/db";
-import { games } from "@/db/schema/game";
+import { games, players } from "@/db/schema/game";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
-export const createGame = async () => {
-  "use server";
+export const createGame = async (clerkId: string): Promise<{id: number}> => {
+  const game_id = await db.insert(games).values({
+    status: "waiting",
+  }).returning({ id: games.id }).execute();
 
-  // generate random slug
-  const slug = Math.random().toString(36).substring(7);
-
-  db.insert(games).values({
+  await db.insert(players).values({
+    gameId: game_id[0].id,
+    playerId: clerkId,
+    is_host: true,
   });
+
+  return game_id[0];
 }
 
 export const joinGame = (slug: number) => {
-  "use server";
   db.query.games.findFirst({
     where: eq(games.id, slug)
   });

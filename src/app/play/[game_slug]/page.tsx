@@ -1,4 +1,5 @@
 import { SignIn, currentUser } from "@clerk/nextjs";
+import Wrapper from "./wrapper";
 import Game from "../../../components/game/game"
 
 interface introProps {
@@ -15,6 +16,6 @@ export default async function page({ params }: introProps) {
   }
 
   return (
-      <Game gameSlug={params.game_slug} currentUserAvatar={user.imageUrl} currentUserId={user.id} currentUserName={user.username ?? "Guest"} />
+      <Wrapper clerkId={user.id} name={user.username ?? "Guest"} avatar={user.imageUrl} userAuthToken={user.username ?? ""} gameId={parseInt(params.game_slug)} />
   );
 }
