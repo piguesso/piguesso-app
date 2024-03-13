@@ -31,3 +31,19 @@ export const updateUser = async (
     .where(eq(users.clerkId, clerkId))
     .execute();
 };
+
+
+export const showUserWithName = async (
+  username: string, 
+) => {
+  const possibleUsers: string[] = []; 
+
+  
+  for (let index = 0; index < possibleUsers.length; index++) {
+    const element = possibleUsers[index];
+    
+  }
+
+  // return await db
+  // .where(eq(users.clerkId, username))
+}

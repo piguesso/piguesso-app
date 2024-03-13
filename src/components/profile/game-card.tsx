@@ -1,4 +1,7 @@
+import TextStyles from "@/utils/textstyles";
 import { Card } from "@mui/material";
+import { twMerge } from "tailwind-merge";
+import ShareIcon from "@mui/icons-material/Share";
 
 export type GameCardProps = {
   id: number;
@@ -28,17 +31,30 @@ export default function GameCard({ id, status }: GameCardProps) {
     }
   };
 
+  const HandleShareButton = () => {
+    console.log("Share Button was pressed");
+  };
+
+  // TODO Change first div from div to Card
+
   return (
-    <Card>
-      <div className="flex flex-row gap-4">
-        <div className="flex justify-center items-center rounded-full w-[48px] h-[48px] bg-primary overflow-hidden">
-          <p className="font-bold">#{id}</p>
+    <div>
+      <div className="flex flex-row gap-4 items-center justify-between bg-surface p-2 m-2 border rounded-xl border-border">
+        <div className="flex flex-row gap-x-3">
+          <div className="flex justify-center items-center rounded-full w-[48px] h-[48px] bg-primary overflow-hidden">
+            <p className={twMerge(TextStyles.Text, "font-bold")}>#{id}</p>
+          </div>
+          <div className="flex flex-col gap-y-1">
+            <h2 className="text-white text-lg font-bold">Game #{id}</h2>
+            {getStatus()}
+          </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <h2 className="text-lg font-bold">Game #{id}</h2>
-          {getStatus()}
+        <div className="flex w-[48px] h-[48px] items-center justify-center bg-primary rounded-full">
+          <button title="shareGame" onClick={HandleShareButton}>
+            <ShareIcon />
+          </button>
         </div>
       </div>
-    </Card>
+    </div>
   );
 }
