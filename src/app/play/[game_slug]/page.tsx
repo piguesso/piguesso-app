@@ -1,10 +1,5 @@
-import GameStart from "@/components/game/game-start";
-import TimedRedirectAfterScreen from "@/components/game/timed-redirect-after-screen";
-import DynamicIsland from "@/components/navigation/nav-bar";
 import { SignIn, currentUser } from "@clerk/nextjs";
-import Game from "./game"
-import GameCanvas from "@/app/play/[game_slug]/game-canvas";
-import submit from "@/app/play/[game_slug]/submit";
+import Wrapper from "./wrapper";
 
 interface introProps {
   params: {
@@ -20,6 +15,6 @@ export default async function page({ params }: introProps) {
   }
 
   return (
-      <Game gameSlug={params.game_slug} currentUserAvatar={user.imageUrl} currentUserId={user.id} currentUserName={user.username ?? "Guest"} />
+      <Wrapper clerkId={user.id} name={user.username ?? "Guest"} avatar={user.imageUrl} userAuthToken={user.username ?? ""} gameId={parseInt(params.game_slug)} />
   );
 }

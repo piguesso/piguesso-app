@@ -15,7 +15,7 @@ interface CanvasProps {
   UserTag: string;
   UserImageUrl: string;
   UserClerkId: string;
-  gameSlug: string;
+  gameId: number;
   submit: (drawing: number[][][], clerkId: string) => void;
 }
 
