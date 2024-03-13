@@ -17,7 +17,7 @@ interface GameProps {
 
 export default function game(props: GameProps) {
   return (
-    // <Lobby gameSlug={props.gameSlug}/>
-    <GameCanvas gameSlug={props.gameSlug} UserTag={props.currentUserName} UserClerkId={props.currentUserId} submit={submit} UserImageUrl={props.currentUserAvatar} />
+    <Lobby gameSlug={props.gameSlug}/>
+    // <GameCanvas gameSlug={props.gameSlug} UserTag={props.currentUserName} UserClerkId={props.currentUserId} submit={submit} UserImageUrl={props.currentUserAvatar} />
   )
 }
