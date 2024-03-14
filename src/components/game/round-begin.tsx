@@ -14,6 +14,7 @@ export default function RoundBeginPage(props: RoundBeginPageProps) {
     const roundInfo: Round = JSON.parse(props.currentRoundInfo);
     const playerStats: PlayerStats = JSON.parse(props.currentPlayerStats);
 
+    // TODO add screen for round begin and round transition
     return (
         <>
             <div className="">

@@ -16,6 +16,7 @@ export function CreateGame({ clerkId }: createGameProps) {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  // TODO fix redirect
   const handleCreateGame = () => {
     setIsLoading(true);
     createGame(clerkId).finally(() => {
