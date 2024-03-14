@@ -1,6 +1,7 @@
 import GameCard from "@/components/profile/game-card";
 import { db } from "@/db";
-import { games, players, rounds } from "@/db/schema/game";
+import { games } from "@/db/schema/game";
+import { players } from "@/db/schema/players";
 import { users } from "@/db/schema/user";
 import { eq } from "drizzle-orm";
 

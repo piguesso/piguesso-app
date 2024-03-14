@@ -43,7 +43,7 @@ module.exports = {
           "Courier New",
           "monospace",
         ],
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Roboto", "system-ui", "sans-serif"],
       },
       colors: {
         primary: "#AE6DF5",

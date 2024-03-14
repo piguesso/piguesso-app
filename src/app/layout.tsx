@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Sono } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
@@ -13,6 +14,14 @@ import { eq } from "drizzle-orm";
 import { users } from "@/db/schema/user";
 
 const sono = Sono({ subsets: ["latin"] });
+
+const roboto = Roboto({
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
+})
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -30,6 +39,7 @@ export default async function RootLayout({
         className={twMerge(
           "h-full w-full overflow-y-scroll bg-background",
           sono.className,
+          roboto.className
         )}
       >
         <body className={"h-full w-full bg-background overflow-y-scroll"}>

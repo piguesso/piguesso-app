@@ -40,12 +40,10 @@ export function CreateGame({ clerkId }: createGameProps) {
 }
 
 export function JoinGame() {
-  const [gameCode, setGameCode] = useState<number>();
+  const [gameCode, setGameCode] = useState<string>();
 
   const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-    // sollte das weiter number bleiben?
-    setGameCode(parseInt(e.target.value));
+    setGameCode(e.target.value);
   };
 
   const handleJoin = () => {

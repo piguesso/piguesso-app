@@ -15,6 +15,7 @@ export interface UserProps {
 
 export interface GameProps {
     gameId: number;
+    gameSlug: string;
 }
 
 export type WrapperProps = UserProps & GameProps;
@@ -34,7 +35,7 @@ export default function Wrapper(props: WrapperProps) {
 
     return (
         <>
-            {state === State.WAITING && <Lobby gameId={props.gameId} />}
+            {state === State.WAITING && <Lobby gameSlug={props.gameSlug} currentUserName={props.name} gameId={props.gameId} />}
             {state === State.START &&
                 <RoundBeginPage
                     gameId={props.gameId}

@@ -1,57 +1,69 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import TextStyles from "@/utils/textstyles";
 import LobbyCanvas from "@/components/game/lobby-canvas";
+import { getLobbyPlayers } from "@/app/play/[game_slug]/actions";
+import { useEffect, useState } from "react";
 
 interface LobbyProps {
   gameId: number;
+  gameSlug: string;
+  currentUserName: string;
 }
 
-interface LobbyPlayer {
-  userName: string,
+export interface LobbyPlayer {
+  userName: string | null,
   avatarUrl: string
+  isHost: boolean
 }
 
-export default function Lobby({ gameId }: LobbyProps) {
-  const [players, setPlayers] = useState<LobbyPlayer[]>();
+export default function Lobby({ gameId, currentUserName, gameSlug }: LobbyProps) {
+  const [lobbyPlayers, setLobbyPlayers] = useState<LobbyPlayer[]>();
 
   useEffect(() => {
-    // get current players in Lobby by Gameslug or something
-    const gs = gameId;
-  }, [gameId]);
+    fetchLobbyPlayers()
+  }, []);
+
+  const fetchLobbyPlayers = async () => {
+    const lobbyPlayers = await getLobbyPlayers(gameId);
+    setLobbyPlayers(lobbyPlayers);
+  }
 
   return (
     <div className={"w-full h-full bg-back p-6"}>
-      <div className={"w-full flex flex-col gap-3"}></div>
-      <div className={twMerge(TextStyles.H2, "text-center")}>Lobby</div>
-      <div className={twMerge(TextStyles.H4, "text-center")}>Don&apos;t go anywhere the game will start soon!</div>
-      <div className={twMerge(TextStyles.BigText, "text-center")}>Game Code: {gameId}</div>
-      <div className={"w-[90%] h-2/3 flex mt-32 content-center mx-auto lg:gap-12 lg:border-2 rounded-3xl lg:p-10"}>
-        <div className={"flex flex-col gap-3 h-full overflow-y-scroll mx-auto"}>
-          {players?.map((player, index) => (
-            <LobbyPlayerCard {...player} key={index} />
-          ))}
+      <div className={"w-2/5 h-1 flex mt-32 content-center mx-auto lg:gap-12 rounded-3xl lg:p-10 flex-col"}>
+        <div className={"w-full bg-primary rounded-3xl p-10"}>
+          <div className={twMerge(TextStyles.H3, "text-center")}>Game: #{gameId}</div>
+          <div className={twMerge(TextStyles.H6, "text-center")}>Game Mode: Fasted Games</div>
+          <div className={twMerge(TextStyles.H6, "text-center")}>Game Code: {gameSlug}</div>
         </div>
-        <div className={"lg:block hidden"}>
-          <div className={twMerge(TextStyles.BigText, "font-bold")}>While you wait ...</div>
-          <LobbyCanvas />
+        <div className={"w-full flex flex-col gap-3 h-full overflow-y-scroll mx-auto"}>
+          {lobbyPlayers?.map((player, index) => (
+            <LobbyPlayerCard userName={player.userName ?? "No Username"} index={index} avatarUrl={player.avatarUrl}
+                             key={index} currentUserName={currentUserName} isHost={player.isHost} />
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-const LobbyPlayerCard = (player: LobbyPlayer, index:number) => {
+interface LobbyPlayerCardProps {
+  userName: string,
+  avatarUrl: string,
+  isHost: boolean,
+  index: number
+  currentUserName: string
+}
+
+const LobbyPlayerCard = ({ userName, avatarUrl, index, currentUserName, isHost }: LobbyPlayerCardProps) => {
   return (
-    <div className={"h-16 border-2 border-white rounded-3xl py-5 px-10 flex gap-6 items-center justify-between"}>
-      <div className={"flex items-center gap-3"}>
-        <div className={twMerge(TextStyles.H4)}>#1</div>
-        <div className={twMerge(TextStyles.BigText)}>SpielerName</div>
+    <div className={twMerge("w-full h-20 rounded-xl py-5 px-5 flex gap-6 items-center", userName === currentUserName ? "bg-primary/40" : "bg-surface")}>
+      <Image src={avatarUrl} width={50} height={50} alt={""} className={"rounded-full"} />
+      <div className={"flex flex-col"}>
+        <div className={twMerge(TextStyles.H7)}>{userName}</div>
+        <div className={twMerge(TextStyles.RobotoHint)}>{isHost ? "Host" : "Player"} {userName === currentUserName ? "& Me" : ""}</div>
       </div>
-      <Image src={"/next.svg"} width={50} height={50} alt={""} className={"rounded-full bg-white"} />
     </div>
   );
 };

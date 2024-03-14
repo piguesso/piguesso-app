@@ -3,10 +3,6 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
 import TextStyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
-import { Button, Input } from "@mui/material";
-import { db } from "@/db";
-import { games } from "@/db/schema/game";
-import { eq } from "drizzle-orm";
 import { CreateGame, JoinGame } from "@/app/play/join-create-games";
 
 export default async function Page() {
