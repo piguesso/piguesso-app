@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Lobby from "@/components/game/lobby";
 import GameCanvas from "@/components/game/game-canvas";
-import RoundBeginPage from "./round-begin";
+import RoundBeginPage from "../../../components/game/round-begin";
 import { State } from "@/utils/enums";
 
 export interface UserProps {
@@ -22,6 +22,7 @@ export type WrapperProps = UserProps & GameProps;
 
 export default function Wrapper(props: WrapperProps) {
     //TODO connect to websocket and listen to messages using a hook
+    // TODO handle events from server
 
     const [state, setState] = useState<State>(State.WAITING);
     const [roundNumber, setRoundNumber] = useState<number>(0);
@@ -30,7 +31,9 @@ export default function Wrapper(props: WrapperProps) {
     // Player Stats object should be stored as string, so changes can be detected
     const [currentPlayerStats, setCurrentPlayerStats] = useState<string>("");
     const [maxRounds, setMaxRounds] = useState<number>(3);
+    // TODO fetch player information from server
 
+    // TODO handle submit by providing the image to the ai and send a message to the server
     const handleSubmit = () => { }
 
     return (

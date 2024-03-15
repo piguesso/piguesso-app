@@ -17,6 +17,8 @@ export interface LobbyPlayer {
   isHost: boolean
 }
 
+// TODO create interface for game info & add to props
+
 export default function Lobby({ gameId, currentUserName, gameSlug }: LobbyProps) {
   const [lobbyPlayers, setLobbyPlayers] = useState<LobbyPlayer[]>();
 
@@ -39,10 +41,9 @@ export default function Lobby({ gameId, currentUserName, gameSlug }: LobbyProps)
         <div className={"w-full flex flex-col gap-3 h-full overflow-y-scroll mx-auto"}>
           {lobbyPlayers && lobbyPlayers.map((player, index) => (
             <LobbyPlayerCard userName={player.userName ?? "No Username"} avatarUrl={player.avatarUrl}
-                             key={index} currentUserName={currentUserName} isHost={player.isHost} />
-          ))}
-        </div>
-      </div>
+                             key={index} currentUserName={currentUserName} isHost={player.isHost} />))}
+    </div>
+    </div>
     </div>
   );
 }
@@ -54,6 +55,7 @@ interface LobbyPlayerCardProps {
   currentUserName: string
 }
 
+// TODO add button to kick user
 const LobbyPlayerCard = ({ userName, avatarUrl, currentUserName, isHost }: LobbyPlayerCardProps) => {
   return (
     <div className={twMerge("w-full h-20 rounded-xl py-5 px-5 flex gap-6 items-center", userName === currentUserName ? "bg-primary/40" : "bg-surface")}>

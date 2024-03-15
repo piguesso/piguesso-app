@@ -7,6 +7,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import cv, { Mat } from "opencv-ts";
 import { Navbar } from "@/components/navigation/nav-bar";
 
+// TODO prio = 0
 export default function LobbyCanvas() {
   let timeOfLastPoint = 0;
   const [color, setColor] = useState<string>("#000000");

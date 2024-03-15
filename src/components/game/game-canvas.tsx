@@ -108,6 +108,7 @@ export default function GameCanvas({ UserTag, UserImageUrl, UserClerkId, submit 
     setControls(!controls);
   };
 
+  // TODO move content to parent
   return (
     <div className="w-full h-full flex flex-col justify-center items-center bg-primary">
       <div className={twMerge(TextStyles.H4, "pb-10")}>
