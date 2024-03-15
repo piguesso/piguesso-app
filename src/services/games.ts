@@ -1,14 +1,7 @@
 import { db } from "@/db";
-import {
-  InsertGame,
-  InsertPlayer,
-  InsertPlayers,
-  InsertRound,
-  InsertRounds,
-  games,
-  players,
-  rounds,
-} from "@/db/schema/game";
+import { games, InsertGame } from "@/db/schema/game";
+import { players, InsertPlayer, InsertPlayers } from "@/db/schema/players";
+import { rounds, InsertRound, InsertRounds } from "@/db/schema/rounds"
 import { eq } from "drizzle-orm";
 
 export const insertGame = async (game: InsertGame) => {

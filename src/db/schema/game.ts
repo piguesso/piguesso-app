@@ -10,8 +10,6 @@ import {
 } from "drizzle-orm/pg-core";
 import { gameState } from "@/db/schema/game-state";
 
-
-
 const games = pgTable("games", {
   id: serial("id").primaryKey(),
   status: gameState("status").default("waiting"),
