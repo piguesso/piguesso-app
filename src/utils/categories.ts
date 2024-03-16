@@ -347,4 +347,10 @@ function getCategoryFromNumber(num: number) {
   return matchingEntry ? matchingEntry[0] : null;
 }
 
-export { categories, getCategoryFromNumber };
+function getRandomCategory() {
+  const categoryEntries = Object.entries(categories);
+  const randomIndex = Math.floor(Math.random() * categoryEntries.length);
+  return categoryEntries[randomIndex][0];
+}
+
+export { categories, getCategoryFromNumber, getRandomCategory };

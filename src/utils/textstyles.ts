@@ -25,6 +25,7 @@ const TextStyles = {
   Hint: "font-mono text-[0.9375rem] text-darkgrey dark:text-grey",
   RobotoText: "font-roboto text-base sm:text-[0.875rem] text-white dark:text-white",
   RobotoHint: "font-roboto text-[0.9375rem] text-primary dark:text-primary",
+  RobotoBigText: "font-roboto text-sm md:text-md text-white dark:text-white leading-tighter",
 } as const;
 
 export default TextStyles;

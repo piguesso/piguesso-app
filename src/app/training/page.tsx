@@ -9,6 +9,6 @@ export default async function Page() {
     if (!user) {
         return <SignIn />;
     } else {
-        return <Canvas UserImageUrl={user.imageUrl} UserTag={user.username ?? ""} UserClerkId={user.id} submit={submit}/>;
+        return <Canvas UserImageUrl={user.imageUrl} UserTag={user.username ?? ""} UserClerkId={user.id} submit={submit} />;
     }
 }

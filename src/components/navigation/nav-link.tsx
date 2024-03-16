@@ -33,9 +33,9 @@ export default function NavLink({ href, lable, children }: NavLinkProps) {
   }
 
   return (
-    <div className="w-full h-full p-1">
-      <Link href={href}>
-        <div>{children}</div>
+    <div className="w-full h-full">
+      <Link href={href} className="w-full h-full">
+        <div className="w-full h-full p-1 flex flex-col items-center">{children}</div>
         <div className={TextStyles.LinkText}>{lable}</div>
       </Link>
     </div>

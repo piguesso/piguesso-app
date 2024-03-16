@@ -12,6 +12,7 @@ import { ClerkProvider, currentUser, SignIn } from "@clerk/nextjs";
 import { db } from "@/db";
 import { eq } from "drizzle-orm";
 import { users } from "@/db/schema/user";
+import { Toaster } from "react-hot-toast";
 
 const sono = Sono({ subsets: ["latin"] });
 
@@ -42,20 +43,20 @@ export default async function RootLayout({
           roboto.className
         )}
       >
-        <body className={"h-full w-full bg-background overflow-y-scroll"}>
-          <Script
-            src="https://kit.fontawesome.com/7dfc9e0334.js"
-            crossOrigin="anonymous"
-          />
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
-          </ThemeProvider>
-        </body>
+      <body className={"h-full w-full bg-background overflow-y-scroll"}>
+      <Script
+        src="https://kit.fontawesome.com/7dfc9e0334.js"
+        crossOrigin="anonymous"
+      />
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <AppRouterCacheProvider><Toaster />{children}</AppRouterCacheProvider>
+      </ThemeProvider>
+      </body>
       </html>
     </ClerkProvider>
   );

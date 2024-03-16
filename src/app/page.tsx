@@ -5,6 +5,7 @@ import DynamicIsland from "@/components/navigation/nav-bar";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import * as tf from '@tensorflow/tfjs';
+import LandingCanvas from "@/components/game/landing-canvas";
 export default async function Home() {
   const user = await currentUser();
   if (!user) {
@@ -13,16 +14,16 @@ export default async function Home() {
 
   return (
     <main
-      // className="flex min-h-screen flex-col items-center gap-8 bg-gray w-full h-full bg-gradient-to-r from-primary to-warning background-animate">
-      className="flex min-h-screen flex-col items-center gap-8 bg-gray w-full h-full">
-      <div className={twMerge(textstyles.H1, "h-full flex flex-col items-center justify-center")}>
-        <div>
+      className="min-h-screen items-center gap-4 bg-white w-full h-full overflow-hidden">
+      <LandingCanvas />
+      <div className={twMerge(textstyles.H1, "flex flex-col items-center justify-center select-none mt-14")}>
+        <div className={"text-black"}>
           Welcome to
         </div>
-        <div className={"mb-20"}>
+        <div className={"mb-14 text-black"}>
           Piguesso
         </div>
-        <div className={"flex flex-col md:flex-row gap-6"}>
+        <div className={"md:flex-row gap-6 grid grid-cols-2"}>
           <PlayLink />
           <AboutLink />
           <GithubLink />

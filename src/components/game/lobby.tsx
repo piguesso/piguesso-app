@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import TextStyles from "@/utils/textstyles";
-import LobbyCanvas from "@/components/game/lobby-canvas";
+import LandingCanvas from "@/components/game/landing-canvas";
 import { getLobbyPlayers } from "@/app/play/[game_slug]/actions";
 import { useEffect, useState } from "react";
 

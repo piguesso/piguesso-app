@@ -24,7 +24,7 @@ export default function Wrapper(props: WrapperProps) {
     //TODO connect to websocket and listen to messages using a hook
     // TODO handle events from server
 
-    const [state, setState] = useState<State>(State.WAITING);
+    const [state, setState] = useState<State>(State.DRAWING);
     const [roundNumber, setRoundNumber] = useState<number>(0);
     // Round object should be stored as string, so changes can be detected
     const [currentRound, setCurrentRound] = useState<string>("");

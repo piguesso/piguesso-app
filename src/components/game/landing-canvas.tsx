@@ -2,13 +2,10 @@
 
 import { useState } from "react";
 import { useDraw } from "@/hooks/useDraw";
-import ColorControls from "@/components/navigation/color-controls";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import cv, { Mat } from "opencv-ts";
-import { Navbar } from "@/components/navigation/nav-bar";
 
 // TODO prio = 0
-export default function LobbyCanvas() {
+export default function LandingCanvas() {
   let timeOfLastPoint = 0;
   const [color, setColor] = useState<string>("#000000");
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
@@ -26,11 +23,8 @@ export default function LobbyCanvas() {
     }
 
     const { x: currX, y: currY } = currentPoint;
-    const newTime = Date.now();
     const lineColor = color;
     const lineWidth = 7;
-
-    let startPoint = prevPoint ?? currentPoint;
 
     setPoints([...points, currentPoint]);
 
@@ -59,36 +53,15 @@ export default function LobbyCanvas() {
     }
   }
 
-  const handleSubmit = () => {
-    console.log("OpenCV is ready");
-    const src = cv.imread("inputCanvas");
-
-    const dst: Mat = new cv.Mat(80, 80, cv.CV_8S, new cv.Scalar(255));
-    console.log(dst.rows);
-    cv.resize(src, dst, new cv.Size(80, 80), 0, 0, cv.INTER_AREA);
-    console.log(dst);
-    const numberDst: number[] = [];
-    dst.data32S.forEach((x) => numberDst.push(x));
-    const data = numberDst.map((x) => x === 0 ? 255 : 0);
-
-    // reshape dst.data32S from 80 to 80x80x1
-  };
-
-  const handleClear = () => {
-    clear();
-  };
-
   return (
-    <div className="w-full h-full justify-center items-center">
-      <canvas
-        ref={canvasRef}
-        onMouseDown={onMouseDown}
-        onMouseUp={handleMouseUp}
-        width={(size.height || 0) * 0.5}
-        height={(size.height || 0) * 0.5}
-        className={"bg-white shadow-2xl border-2 border-black rounded-md"}
-        id={"inputCanvas"}
-      />
-    </div>
+    <canvas
+      ref={canvasRef}
+      onMouseDown={onMouseDown}
+      onMouseUp={handleMouseUp}
+      width={(size.width || 0)}
+      height={(size.height || 0)}
+      className={"absolute bg-transparent"}
+      id={"inputCanvas"}
+    />
   );
 }

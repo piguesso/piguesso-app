@@ -6,6 +6,7 @@ import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { HomeIcon, PlayIcon } from "@radix-ui/react-icons";
 
 interface DynamicIslandProps {
   UserImageUrl: string;
@@ -37,23 +38,23 @@ export function Navbar(props: NavbarProps) {
       <ul className="flex w-full h-full justify-evenly items-center">
         <li className="mx-4 text-center selection:border-1 border-primary min-w-[50px] w-1/3">
           <NavLink href={"/play"} lable={"Play"}>
-            <PlayArrowOutlinedIcon />
+            <PlayIcon />
           </NavLink>
         </li>
-        <li className="mx-4 text-center w-1/3 min-w-[50px]">
-          <NavLink href={"/browse"} lable={"Browse"}>
-            <SearchOutlinedIcon />
+        <li className="mx-4 text-center selection:border-1 border-primary min-w-[50px] w-1/3">
+          <NavLink href={"/home"} lable={"Home"}>
+            <HomeIcon />
           </NavLink>
         </li>
-        <li className="mx-4 text-center w-1/3 min-w-[50px]">
-          <NavLink href={props.UserImageUrl ? `/user/${props.UserTag}` : ""} lable={"Profile"}>
+        <li className="mx-4 text-center selection:border-1 border-primary min-w-[50px] w-1/3">
+          <NavLink href={props.UserImageUrl ? `/user/${props.UserTag}` : ""} lable={""}>
             {props.UserImageUrl && props.UserTag &&
               <SignedIn>
                 <Image
                   className="rounded-full"
                   src={props.UserImageUrl}
-                  width="28"
-                  height="28"
+                  width="48"
+                  height="48"
                   alt="Profile"
                 />
               </SignedIn>
