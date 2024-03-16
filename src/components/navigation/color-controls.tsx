@@ -7,12 +7,13 @@ import { twMerge } from "tailwind-merge";
 
 interface ColorControlsProps {
   setColor: (color: string) => void;
+  erease: () => void; //TODO Welcher Typ muss das sein: 
   clear: () => void;
 }
 
 const colors = ["secondary", "black", "primary"];
 
-export default function ColorControls({ setColor, clear }: ColorControlsProps) {
+export default function ColorControls({ setColor, clear, erease }: ColorControlsProps) {
   const pathname = usePathname();
   const [selectedColor, setSelectedColor] = useState("black");
   const [selectedTool, setSelectedTool] = useState("pen");
@@ -57,7 +58,7 @@ export default function ColorControls({ setColor, clear }: ColorControlsProps) {
             "w-8 h-8 mx-2 bg-lightgrey/50 border-white border-2 rounded-full flex items-center justify-center cursor-pointer",
             selectedTool === "eraser" && "rounded-md",
           )}
-          onClick={() => setSelectedTool("eraser")}
+          onClick={erease}
         >
           <i className="fa-solid fa-eraser"></i>
         </div>
