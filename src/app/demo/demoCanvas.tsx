@@ -15,6 +15,7 @@ import TextStyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
 import { MixIcon, RocketIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { usePathname } from 'next/navigation';
 
 interface CanvasProps {
   UserTag: string;
@@ -23,7 +24,7 @@ interface CanvasProps {
   submit: (drawing: number[][][], clerkId: string) => void;
 }
 
-export default function Canvas({ UserTag, UserImageUrl, UserClerkId, submit }: CanvasProps) {
+export default function TrainingCanvas({ UserTag, UserImageUrl, UserClerkId, submit }: CanvasProps) {
   const [color, setColor] = useState<string>("#000000");
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
   const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
@@ -31,6 +32,8 @@ export default function Canvas({ UserTag, UserImageUrl, UserClerkId, submit }: C
   const [currentGuess, setCurrentGuess] = useState<string | null>(null);
   // PREDICTION AND MODEL
   const [model, setModel] = useState<tf.LayersModel | null>(null);
+
+  const currentRoute = usePathname();
 
   useEffect(() => {
     getModel();
@@ -128,7 +131,6 @@ export default function Canvas({ UserTag, UserImageUrl, UserClerkId, submit }: C
     } else {
       setCurrentGuess(topCats[0]);
     }
-    // submit(dataReshaped, UserClerkId);
   };
 
   const handleClear = () => {

@@ -7,6 +7,7 @@ import * as players from "./players";
 import * as playerScoring from "./scoring";
 import * as rounds from "./rounds";
 import * as playerScoringRound from "./player-scoring-round";
+import * as demo from "@/db/schema/demo";
 
 const schema = {
   ...friends,
@@ -18,6 +19,7 @@ const schema = {
   ...playerScoring,
   ...rounds,
   ...playerScoringRound,
+  ...demo,
 };
 
 export default schema;

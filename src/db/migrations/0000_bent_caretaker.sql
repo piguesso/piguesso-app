@@ -4,6 +4,18 @@ EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "demo" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"clerk_id" varchar NOT NULL,
+	"drawing" jsonb NOT NULL,
+	"term" integer NOT NULL,
+	"guess" integer NOT NULL,
+	"term_confidence" numeric NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "demo_clerk_id_unique" UNIQUE("clerk_id")
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "friends" (
 	"user_id" varchar NOT NULL,
 	"friend_id" varchar NOT NULL,
@@ -20,6 +32,7 @@ CREATE TABLE IF NOT EXISTS "games" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "player_scoring_round" (
+	"id" serial PRIMARY KEY NOT NULL,
 	"player_id" varchar NOT NULL,
 	"game_id" serial NOT NULL,
 	"score" integer DEFAULT 0,
@@ -36,6 +49,7 @@ CREATE TABLE IF NOT EXISTS "player_scoring_round" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "players" (
+	"id" serial PRIMARY KEY NOT NULL,
 	"player_id" varchar NOT NULL,
 	"game_id" serial NOT NULL,
 	"is_host" boolean DEFAULT false,
