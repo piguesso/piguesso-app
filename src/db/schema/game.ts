@@ -1,8 +1,5 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import {
-  boolean,
-  integer,
-  pgEnum,
   pgTable,
   serial,
   timestamp,

@@ -1,4 +1,4 @@
-import { integer, json, jsonb, makePgArray, pgTable, varchar } from "drizzle-orm/pg-core";
+import { jsonb, pgTable, varchar } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
 

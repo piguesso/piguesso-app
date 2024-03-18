@@ -1,5 +1,5 @@
 {
-  "id": "b3642dd0-22dc-4223-bbe2-d074e2cb0304",
+  "id": "370bfa4a-fb4b-4464-ade9-bacef5e22dab",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -8,6 +8,12 @@
       "name": "friends",
       "schema": "",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
         "user_id": {
           "name": "user_id",
           "type": "varchar",
@@ -85,6 +91,12 @@
       "name": "player_scoring_round",
       "schema": "",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
         "player_id": {
           "name": "player_id",
           "type": "varchar",
@@ -180,6 +192,12 @@
       "name": "players",
       "schema": "",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
         "player_id": {
           "name": "player_id",
           "type": "varchar",
@@ -289,6 +307,12 @@
       "name": "player_scoring",
       "schema": "",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
         "player_id": {
           "name": "player_id",
           "type": "varchar",
@@ -408,7 +432,7 @@
         "clerk_id": {
           "name": "clerk_id",
           "type": "varchar",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "biography": {

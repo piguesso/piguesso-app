@@ -1,1 +1,0 @@
-ALTER TABLE "training" ALTER COLUMN "drawing" DROP DEFAULT;

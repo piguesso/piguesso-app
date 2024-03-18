@@ -5,6 +5,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "friends" (
+	"id" serial PRIMARY KEY NOT NULL,
 	"user_id" varchar NOT NULL,
 	"friend_id" varchar NOT NULL,
 	"created_at" varchar NOT NULL
@@ -20,6 +21,7 @@ CREATE TABLE IF NOT EXISTS "games" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "player_scoring_round" (
+	"id" serial PRIMARY KEY NOT NULL,
 	"player_id" varchar NOT NULL,
 	"game_id" serial NOT NULL,
 	"score" integer DEFAULT 0,
@@ -36,6 +38,7 @@ CREATE TABLE IF NOT EXISTS "player_scoring_round" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "players" (
+	"id" serial PRIMARY KEY NOT NULL,
 	"player_id" varchar NOT NULL,
 	"game_id" serial NOT NULL,
 	"is_host" boolean DEFAULT false,
@@ -54,6 +57,7 @@ CREATE TABLE IF NOT EXISTS "rounds" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "player_scoring" (
+	"id" serial PRIMARY KEY NOT NULL,
 	"player_id" varchar NOT NULL,
 	"total_xp" integer DEFAULT 0,
 	"highest_score_game" integer DEFAULT 0,
@@ -74,7 +78,7 @@ CREATE TABLE IF NOT EXISTS "training" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
-	"clerk_id" varchar NOT NULL,
+	"clerk_id" varchar PRIMARY KEY NOT NULL,
 	"biography" varchar(1000),
 	"tag" varchar NOT NULL,
 	CONSTRAINT "users_tag_unique" UNIQUE("tag")

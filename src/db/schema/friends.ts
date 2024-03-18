@@ -1,7 +1,8 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
-import { pgTable, varchar } from "drizzle-orm/pg-core";
+import { pgTable, serial, varchar } from "drizzle-orm/pg-core";
 
 const friends = pgTable("friends", {
+  id: serial("id").primaryKey(),
   userId: varchar("user_id").notNull(),
   friendId: varchar("friend_id").notNull(),
   createdAt: varchar("created_at").notNull(),
