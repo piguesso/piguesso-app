@@ -1,6 +1,6 @@
 {
-  "id": "b3642dd0-22dc-4223-bbe2-d074e2cb0304",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "d37d5c04-3be5-415d-9ff9-603b5c0ff425",
+  "prevId": "42366182-7a10-4e51-b60d-6be5476314f8",
   "version": "5",
   "dialect": "pg",
   "tables": {
@@ -8,6 +8,12 @@
       "name": "friends",
       "schema": "",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
         "user_id": {
           "name": "user_id",
           "type": "varchar",
