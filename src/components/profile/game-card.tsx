@@ -38,8 +38,7 @@ export default function GameCard({ id, status }: GameCardProps) {
   // TODO Change first div from div to Card
 
   return (
-    <div>
-      <div className="flex flex-row gap-4 items-center justify-between bg-surface p-2 m-2 border rounded-xl border-border">
+      <div className="flex flex-row gap-4 items-center justify-between sm:w-80 md:w-[75%] bg-surface p-2 m-2 border rounded-xl border-border">
         <div className="flex flex-row gap-x-3">
           <div className="flex justify-center items-center rounded-full w-[48px] h-[48px] bg-primary overflow-hidden">
             <p className={twMerge(TextStyles.Text, "font-bold")}>#{id}</p>
@@ -55,6 +54,5 @@ export default function GameCard({ id, status }: GameCardProps) {
           </button>
         </div>
       </div>
-    </div>
   );
 }

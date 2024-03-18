@@ -15,7 +15,7 @@ const FriendCard: React.FC<FriendCardProps> = ({
   Status,
   Friends,
 }: FriendCardProps) => {
-  const textColor = Status ? "text-success" : "text-red";
+  const textColor = Status ? "text-success" : "text-red-500";
   const [friend, setFriend] = useState(false);
   const [friendAddedVisible, setFriendAddedVisible] = useState(false);
 
@@ -32,19 +32,19 @@ const FriendCard: React.FC<FriendCardProps> = ({
   };
 
   const handleButtonRemoveFriendClick = () => {
-    setFriend(false); 
-    setFriendAddedVisible(false); 
-  }
+    setFriend(false);
+    setFriendAddedVisible(false);
+  };
 
   return (
-    <div className="flex flex-row bg-surface border border-border rounded-xl p-2 m-2 gap-x-2 items-center justify-between">
-      <div className="flex flex-row gap-x-3 items-align"> 
-      <Image src={profilePicture} width={55} height={55} alt="Profile" />
-      <div className="gap-y-1 flex flex-col">
-        <h3 className="font-bold">{UserName}</h3>
-        <p className={textColor}>{currentPlayerStatus}</p>
+    <div className="flex flex-row bg-surface border border-border sm:w-80 md:w-[75%] rounded-xl p-2 m-2 gap-x-2 items-center justify-between">
+      <div className="flex flex-row gap-x-3 items-align">
+        <Image src={profilePicture} width={55} height={55} alt="Profile" />
+        <div className="gap-y-1 flex flex-col">
+          <h3 className="font-bold">{UserName}</h3>
+          <p className={textColor}>{currentPlayerStatus}</p>
+        </div>
       </div>
-      </div> 
       {!friendAddedVisible && (
         <button title="AddFriendButton" onClick={handleButtonClick}>
           <Image
@@ -56,13 +56,16 @@ const FriendCard: React.FC<FriendCardProps> = ({
         </button>
       )}
       {friendAddedVisible && (
-        <button title = "RemoveFriendButton" onClick={handleButtonRemoveFriendClick}>
-        <Image
-          src={friendAdded}
-          width={50}
-          height={50}
-          alt="Friend Added Image"
-        />
+        <button
+          title="RemoveFriendButton"
+          onClick={handleButtonRemoveFriendClick}
+        >
+          <Image
+            src={friendAdded}
+            width={50}
+            height={50}
+            alt="Friend Added Image"
+          />
         </button>
       )}
     </div>
