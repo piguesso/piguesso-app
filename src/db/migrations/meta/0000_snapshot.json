@@ -1,5 +1,5 @@
 {
-  "id": "6712f872-160d-4789-bc66-c288ae2b0a3c",
+  "id": "b3642dd0-22dc-4223-bbe2-d074e2cb0304",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -369,6 +369,12 @@
       "name": "player_scoring",
       "schema": "",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
         "player_id": {
           "name": "player_id",
           "type": "varchar",
@@ -488,7 +494,7 @@
         "clerk_id": {
           "name": "clerk_id",
           "type": "varchar",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "biography": {

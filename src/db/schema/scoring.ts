@@ -1,7 +1,8 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
-import { integer, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
+import { integer, pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
 
 const playerScoring = pgTable("player_scoring", {
+  id: serial("id").primaryKey(),
   playerId: varchar("player_id").notNull(),
   totalXP: integer("total_xp").default(0),
   highestScoreGame: integer("highest_score_game").default(0),
