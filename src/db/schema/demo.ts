@@ -2,13 +2,11 @@ import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import {
   boolean, decimal,
   integer, jsonb,
-  pgEnum,
   pgTable, real,
   serial, text,
   timestamp,
   varchar
 } from "drizzle-orm/pg-core";
-import { gameState } from "@/db/schema/game-state";
 
 const demo = pgTable("demo", {
   id: serial("id").primaryKey(),

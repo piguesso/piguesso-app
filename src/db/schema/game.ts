@@ -5,11 +5,10 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
-import { gameState } from "@/db/schema/game-state";
 
 const games = pgTable("games", {
   id: serial("id").primaryKey(),
-  status: gameState("status").default("waiting"),
+  status: varchar("status").default("waiting"),
   gameSlug: varchar("game_slug").notNull(),
   winnerId: varchar("winner_id"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
