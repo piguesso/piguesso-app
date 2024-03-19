@@ -1,16 +1,13 @@
-DO $$ BEGIN
- CREATE TYPE "game_state" AS ENUM('waiting', 'playing', 'finished');
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "demo" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"clerk_id" varchar NOT NULL,
-	"drawing" jsonb NOT NULL,
-	"term" integer NOT NULL,
-	"guess" integer NOT NULL,
-	"term_confidence" numeric NOT NULL,
+	"drawing" jsonb,
+	"term" integer,
+	"guess" integer,
+	"term_confidence" numeric,
+	"host" boolean DEFAULT false NOT NULL,
+	"image_url" text,
+	"username" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "demo_clerk_id_unique" UNIQUE("clerk_id")
@@ -25,7 +22,7 @@ CREATE TABLE IF NOT EXISTS "friends" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "games" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"status" "game_state" DEFAULT 'waiting',
+	"status" varchar DEFAULT 'waiting',
 	"game_slug" varchar NOT NULL,
 	"winner_id" varchar,
 	"created_at" timestamp DEFAULT now() NOT NULL,

@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1710687882899,
-      "tag": "0000_worried_sumo",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1710689263435,
-      "tag": "0001_parched_white_queen",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1710804852589,
-      "tag": "0002_glossy_madrox",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1710805126874,
-      "tag": "0003_harsh_thing",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1710843806650,
-      "tag": "0004_slim_layla_miller",
+      "when": 1710844771872,
+      "tag": "0000_absent_hulk",
       "breakpoints": true
     }
   ]
