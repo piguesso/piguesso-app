@@ -47,7 +47,7 @@ export default function LandingCanvas() {
         points[i].x,
         points[i].y,
         points[i + 1].x,
-        points[i + 1].y
+        points[i + 1].y,
       ),
         ctx.stroke();
     }
@@ -58,8 +58,8 @@ export default function LandingCanvas() {
       ref={canvasRef}
       onMouseDown={onMouseDown}
       onMouseUp={handleMouseUp}
-      width={(size.width || 0)}
-      height={(size.height || 0)}
+      width={size.width || 0}
+      height={size.height || 0}
       className={"absolute bg-transparent"}
       id={"inputCanvas"}
     />

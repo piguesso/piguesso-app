@@ -8,8 +8,11 @@ export default async function Page() {
     return <SignIn />;
   } else {
     return (
-      <TrainingCanvas UserImageUrl={user.imageUrl} UserTag={user.username ?? ""} UserClerkId={user.id}
-                      submit={submit} />
+      <TrainingCanvas
+        UserImageUrl={user.imageUrl}
+        UserTag={user.username ?? ""}
+        UserClerkId={user.id}
+      />
     );
   }
 }

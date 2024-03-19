@@ -3,7 +3,7 @@ import {
   boolean, decimal,
   integer, jsonb,
   pgEnum,
-  pgTable,
+  pgTable, real,
   serial, text,
   timestamp,
   varchar
@@ -16,7 +16,7 @@ const demo = pgTable("demo", {
   drawing: jsonb("drawing").$type<{data: number[][][]}>(),
   term: integer("term"),
   guess: integer("guess"),
-  termConfidence: decimal("term_confidence"),
+  termConfidence: real("term_confidence").default(0.0),
   host: boolean("host").notNull().default(false),
   imageUrl: text("image_url"),
   username: text("username").notNull(),

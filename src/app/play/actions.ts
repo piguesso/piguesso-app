@@ -24,12 +24,12 @@ export const createGame = async (clerkId: string): Promise<{id: number}> => {
 }
 
 export const joinGame = (slug: string) => {
+  if (slug == "demo") return redirect("/demo");
   const game = db.query.games.findFirst({
     where: eq(games.gameSlug, slug)
   });
   if (!game) {
     return redirect("/play");
   }
-  // join game
   return redirect(`/play/${slug}`);
 }

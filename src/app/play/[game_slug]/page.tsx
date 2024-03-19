@@ -13,33 +13,41 @@ interface IntroProps {
 }
 
 export default async function page({ params }: IntroProps) {
-
   const user = await currentUser();
   if (!user) {
     return <SignIn />;
   }
 
   const currentGame = await db.query.games.findFirst({
-    where: eq(games.gameSlug, params.game_slug)
-  })
+    where: eq(games.gameSlug, params.game_slug),
+  });
 
   if (!currentGame) {
     return redirect("/play");
   }
 
   const isCurrentUserInGame = await db.query.players.findFirst({
-    where: and(eq(players.playerId, user.id), eq(players.gameId, currentGame.id))
+    where: and(
+      eq(players.playerId, user.id),
+      eq(players.gameId, currentGame.id),
+    ),
   });
 
   if (!isCurrentUserInGame) {
     db.insert(players).values({
       playerId: user.id,
-      gameId: currentGame.id
+      gameId: currentGame.id,
     });
-    }
-
+  }
 
   return (
-      <Wrapper gameSlug={params.game_slug} clerkId={user.id} name={user.username ?? "Guest"} avatar={user.imageUrl} userAuthToken={user.username ?? ""} gameId={currentGame.id} />
+    <Wrapper
+      gameSlug={params.game_slug}
+      clerkId={user.id}
+      name={user.username ?? "Guest"}
+      avatar={user.imageUrl}
+      userAuthToken={user.username ?? ""}
+      gameId={currentGame.id}
+    />
   );
 }

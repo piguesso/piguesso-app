@@ -13,37 +13,38 @@ import { getCategoryFromNumber, getRandomCategory } from "@/utils/categories";
 import toast from "react-hot-toast";
 import TextStyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
-import { MixIcon, RocketIcon } from "@radix-ui/react-icons";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { usePathname } from 'next/navigation';
+import { MixIcon } from "@radix-ui/react-icons";
+import { Alert, AlertTitle } from "@/components/ui/alert";
+import { usePathname } from "next/navigation";
+import { Controls } from "@/components/canvas/controls";
 
 interface CanvasProps {
   UserTag: string;
   UserImageUrl: string;
   UserClerkId: string;
-  submit: (drawing: number[][][], clerkId: string) => void;
 }
 
-export default function TrainingCanvas({ UserTag, UserImageUrl, UserClerkId }: CanvasProps) {
+export default function TrainingCanvas({
+  UserTag,
+  UserImageUrl,
+  UserClerkId,
+}: CanvasProps) {
   const [color, setColor] = useState<string>("#000000");
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
   const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
   const [currentWord, setCurrentWord] = useState<string>("");
   const [currentGuess, setCurrentGuess] = useState<string | null>(null);
   const [model, setModel] = useState<tf.LayersModel | null>(null);
-
+  const [controls, setControls] = useState<boolean>(true);
   const currentRoute = usePathname();
 
   useEffect(() => {
     getFirstWord();
-    toast.promise(
-      getModel(),
-      {
-        loading: 'Loading Model...',
-        success: <b>Model Loaded!</b>,
-        error: <b>Could not load the model.</b>,
-      }
-    );
+    toast.promise(getModel(), {
+      loading: "Loading Model...",
+      success: <b>Model Loaded!</b>,
+      error: <b>Could not load the model.</b>,
+    });
   }, []);
 
   const getFirstWord = () => {
@@ -55,7 +56,6 @@ export default function TrainingCanvas({ UserTag, UserImageUrl, UserClerkId }: C
     loadModel().then((model) => {
       setModel(model);
     });
-
   };
   // ====================
 
@@ -87,7 +87,7 @@ export default function TrainingCanvas({ UserTag, UserImageUrl, UserClerkId }: C
         points[i].x,
         points[i].y,
         points[i + 1].x,
-        points[i + 1].y
+        points[i + 1].y,
       );
       ctx.stroke();
     }
@@ -101,13 +101,13 @@ export default function TrainingCanvas({ UserTag, UserImageUrl, UserClerkId }: C
       CANVAS_SRC = cv.imread("inputCanvas");
       dst = new cv.Mat(80, 80, cv.CV_8S);
     } catch (e) {
-      toast.error("Please Refresh. Trainingssession has expired.")
-      return
+      toast.error("Please Refresh. Trainingssession has expired.");
+      return;
     }
     cv.resize(CANVAS_SRC, dst, new cv.Size(80, 80), 0, 0, cv.INTER_AREA);
     const numberDst: number[] = [];
     dst.data32S.forEach((x) => numberDst.push(x));
-    const data = numberDst.map((x) => x === 0 ? 0.0 : 1.0);
+    const data = numberDst.map((x) => (x === 0 ? 0.0 : 1.0));
     const dataReshaped: any = reshape(data as unknown as number[], [80, 80, 1]);
     let topCats: (string | null)[] = [];
     if (model) {
@@ -115,7 +115,9 @@ export default function TrainingCanvas({ UserTag, UserImageUrl, UserClerkId }: C
       const arr = Array.from((pred as tf.Tensor2D).dataSync());
       const arrcopy = arr.slice();
       const RELATIVE_PREDICTIONS = 20;
-      const relevantPreds = arrcopy.sort((a, b) => b - a).slice(0, RELATIVE_PREDICTIONS);
+      const relevantPreds = arrcopy
+        .sort((a, b) => b - a)
+        .slice(0, RELATIVE_PREDICTIONS);
       let topIndices = [];
       for (let i = 0; i < RELATIVE_PREDICTIONS; i++) {
         topIndices.push(arr.indexOf(relevantPreds[i]));
@@ -139,38 +141,56 @@ export default function TrainingCanvas({ UserTag, UserImageUrl, UserClerkId }: C
     clear();
   };
 
+  const switchControls = () => {
+    setControls(!controls);
+  };
+
   return (
     <div
-      className={twMerge("w-full h-full min-w-[300px] min-h-[300px] bg-surface overflow-hidden absolute", "canvas-wrapper")}>
+      className={twMerge(
+        "w-full h-full min-w-[300px] min-h-[300px] bg-surface overflow-hidden absolute",
+        "canvas-wrapper",
+      )}
+    >
       <div className="w-full h-full absolute top-0 flex-col justify-center items-center bg-black">
         <div className={"w-full h-28 flex bg-primary items-center pl-16"}>
-          <div className={twMerge(TextStyles.H5, "text-center")}>Challenge: {currentWord}</div>
+          <div className={twMerge(TextStyles.H5, "text-center")}>
+            Challenge: {currentWord}
+          </div>
         </div>
         <div className={"w-full h-2 bg-surface"}></div>
         <canvas
           ref={canvasRef}
           onMouseDown={onMouseDown}
           onMouseUp={handleMouseUp}
-          width={(size.width ? size.width * 0.9 : 0)}
-          height={(size.height || 600)}
+          width={size.width}
+          height={size.height}
           className={"bg-white shadow-2xl"}
           id={"inputCanvas"}
         />
-        <Alert className={"w-[80%] md:w-1/3 mx-auto z-20 bottom-1/3 flex items-center"}>
-          <MixIcon className="h-4 w-4" />
-          <AlertTitle className={TextStyles.RobotoBigText}>I am guessing that is a <span className={TextStyles.H7}>{currentGuess?.replace("_"," ").toUpperCase()}</span></AlertTitle>
-        </Alert>
-        <div
+        <Alert
           className={
-            "w-full h-20 sm:w-fit bg-surface fixed sm:absolute bottom-0 sm:bottom-10 mx-auto left-0 right-0 rounded-none sm:rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] px-12"
+            "w-[80%] md:w-1/3 mx-auto z-20 bottom-1/3 flex items-center"
           }
         >
-          <div className="max-w-fit h-full flex">
-            <ColorControls setColor={setColor} clear={handleClear} generateNewWord={getFirstWord}
-                           currentWord={currentWord} />
-            <Navbar UserImageUrl={UserImageUrl} UserTag={UserTag} />
-          </div>
-        </div>
+          <MixIcon className="h-4 w-4" />
+          <AlertTitle className={TextStyles.RobotoBigText}>
+            I am guessing that is a{" "}
+            <span className={TextStyles.H7}>
+              {currentGuess?.replace("_", " ").toUpperCase()}
+            </span>
+          </AlertTitle>
+        </Alert>
+        <Controls
+          UserTag={UserTag}
+          controls={controls}
+          UserImageUrl={UserImageUrl}
+          currentWord={currentWord}
+          getFirstWord={getFirstWord}
+          switchControls={switchControls}
+          handleClear={handleClear}
+          setColor={setColor}
+        />
       </div>
     </div>
   );

@@ -17,12 +17,11 @@ import { Toaster } from "react-hot-toast";
 const sono = Sono({ subsets: ["latin"] });
 
 const roboto = Roboto({
-  weight: ['400', '700'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  display: 'swap',
-})
-
+  weight: ["400", "700"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -40,23 +39,26 @@ export default async function RootLayout({
         className={twMerge(
           "h-full w-full overflow-y-scroll bg-background",
           sono.className,
-          roboto.className
+          roboto.className,
         )}
       >
-      <body className={"h-full w-full bg-background overflow-y-scroll"}>
-      <Script
-        src="https://kit.fontawesome.com/7dfc9e0334.js"
-        crossOrigin="anonymous"
-      />
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <AppRouterCacheProvider><Toaster />{children}</AppRouterCacheProvider>
-      </ThemeProvider>
-      </body>
+        <body className={"h-full w-full bg-background overflow-y-scroll"}>
+          <Script
+            src="https://kit.fontawesome.com/7dfc9e0334.js"
+            crossOrigin="anonymous"
+          />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AppRouterCacheProvider>
+              <Toaster />
+              {children}
+            </AppRouterCacheProvider>
+          </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );

@@ -47,8 +47,11 @@ export function Navbar(props: NavbarProps) {
           </NavLink>
         </li>
         <li className="mx-4 text-center selection:border-1 border-primary min-w-[50px] w-1/3">
-          <NavLink href={props.UserImageUrl ? `/user/${props.UserTag}` : ""} lable={""}>
-            {props.UserImageUrl && props.UserTag &&
+          <NavLink
+            href={props.UserImageUrl ? `/user/${props.UserTag}` : ""}
+            lable={""}
+          >
+            {props.UserImageUrl && props.UserTag && (
               <SignedIn>
                 <Image
                   className="rounded-full"
@@ -58,7 +61,7 @@ export function Navbar(props: NavbarProps) {
                   alt="Profile"
                 />
               </SignedIn>
-            }
+            )}
             <SignedOut>
               <SignInButton afterSignUpUrl="/join">
                 <LoginOutlinedIcon className="mx-auto" />

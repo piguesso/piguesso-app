@@ -19,14 +19,14 @@ export default function UserJoinForm(props: JoinFormProps) {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting, isDirty, isValid }
+    formState: { errors, isSubmitting, isDirty, isValid },
   } = useForm<FormData>({
-    resolver: zodResolver(joinSchema)
+    resolver: zodResolver(joinSchema),
   });
 
   const onSubmit = async (data: FormData) => {
     props.submit(data, props.afterSubmitUrl);
-  }
+  };
 
   return (
     <div className="flex flex-col gap-2 w-full h-full">
@@ -40,23 +40,25 @@ export default function UserJoinForm(props: JoinFormProps) {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div>
-        <textarea
-          {...register("biography", { required: true })}
-          className="w-full h-40 rounded-md bg-primary p-2"
-          placeholder="Tell us about yourself"
-        />
+          <textarea
+            {...register("biography", { required: true })}
+            className="w-full h-40 rounded-md bg-primary p-2"
+            placeholder="Tell us about yourself"
+          />
           {errors?.biography && (
-            <p className="text-red-600 text-sm">
-              {errors?.biography?.message}
-            </p>
+            <p className="text-red-600 text-sm">{errors?.biography?.message}</p>
           )}
         </div>
         <div className={"flex w-full justify-end"}>
-          <button className="bg-primary text-white rounded-md p-2" role={"submit"}
-                  disabled={!isDirty || !isValid || isSubmitting}>Save
+          <button
+            className="bg-primary text-white rounded-md p-2"
+            role={"submit"}
+            disabled={!isDirty || !isValid || isSubmitting}
+          >
+            Save
           </button>
         </div>
       </form>
     </div>
   );
-};
+}

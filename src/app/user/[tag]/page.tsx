@@ -26,19 +26,26 @@ export default async function Page({ params }: UserProfileProps) {
   }
 
   const scoring = await db.query.playerScoring.findFirst({
-    where: eq(playerScoring.playerId, clerkUser.id)
+    where: eq(playerScoring.playerId, clerkUser.id),
   });
 
   if (!scoring) {
-    redirect("/");
+    await db.insert(playerScoring).values({
+      playerId: clerkUser.id,
+    });
+    redirect(`/user/${clerkUser.username}`);
   }
 
   const user = await db.query.users.findFirst({
-    where: eq(users.clerkId, clerkUser.id)
+    where: eq(users.clerkId, clerkUser.id),
   });
 
   if (!user) {
-    redirect("/");
+    await db.insert(users).values({
+      clerkId: clerkUser.id,
+      tag: clerkUser.username ?? "",
+    });
+    redirect(`/user/${clerkUser.username}`);
   }
 
   const rating =
@@ -85,7 +92,10 @@ export default async function Page({ params }: UserProfileProps) {
         gamesTab={<GamesTab playerId={user.clerkId} />}
         friendsTab={<FriendsTab />}
       />
-      <DynamicIsland UserImageUrl={clerkUser.imageUrl} UserTag={clerkUser.username ?? undefined}/>
+      <DynamicIsland
+        UserImageUrl={clerkUser.imageUrl}
+        UserTag={clerkUser.username ?? undefined}
+      />
     </div>
   );
 }
