@@ -1,4 +1,4 @@
-import { boolean, integer, pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
+import { bigint, boolean, integer, pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
 const playerScoringRound = pgTable("player_scoring_round", {
@@ -9,7 +9,7 @@ const playerScoringRound = pgTable("player_scoring_round", {
   roundId: serial("round_id").notNull(),
   place: integer("place").default(1),
   isWinner: boolean("is_winner").default(false),
-  timeUsedToComplete: integer("time_used_to_complete").default(0),
+  timeUsedToComplete: bigint("time_used_to_complete", { mode: 'number' }).default(0),
   firstTopic: varchar("first_topic", { length: 100 }),
   secondTopic: varchar("second_topic", { length: 100 }),
   thirdTopic: varchar("third_topic", { length: 100 }),
