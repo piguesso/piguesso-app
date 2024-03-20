@@ -5,19 +5,15 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EmailIcon from "@mui/icons-material/Email";
 
 export default function Page() {
-  let currentDate = Date.now();
-
   return (
-    <div className="flex flex-col p-10 pb-40  bg-black gap-y-10">
-      <h2 className={twMerge(TextStyles.H2Gradient, "items-center")}>
-        Überschrift
-      </h2>
+    <div className="flex flex-col p-10 pb-40 h-screen overflow-y-auto bg-black gap-y-10">
+      <h2 className={twMerge(TextStyles.H2Gradient, "items-center")}>About</h2>
       <div className="gap-y-5 flex flex-col">
         <p className={twMerge(TextStyles.H4, "")}>Anschrift:</p>
-        <div className="">
-          <ul>Piguesso AG</ul>
-          <ul>Alt-Friedrichsfelde 60</ul>
-          <ul>Berlin, Germany</ul>
+        <div className="gap-y-2 flex flex-col">
+          <p>Piguesso AG</p>
+          <p>Alt-Friedrichsfelde 60</p>
+          <p>Berlin, Germany</p>
         </div>
       </div>
       <div className="flex flex-col gap-y-5">
@@ -25,10 +21,10 @@ export default function Page() {
         <div className="flex flex-col gap-y-2">
           <div className="flex flex-row gap-x-5">
             <LocalPhoneIcon />
-            <ul>+49 176 00000000</ul>
+            <p>+49 176 00000000</p>
           </div>
           <div className="flex flex-row gap-x-5">
-            <EmailIcon /> <ul>info@piguesso.com</ul>
+            <EmailIcon /> <p>info@piguesso.com</p>
           </div>
         </div>
       </div>
@@ -64,7 +60,7 @@ export default function Page() {
           Webseite können Sie sich gerne an uns wenden.
         </p>
 
-        <p>Letzte Aktualisierung: {currentDate}</p>
+        <p>Letzte Aktualisierung: 3/20/2024</p>
       </div>
     </div>
   );
