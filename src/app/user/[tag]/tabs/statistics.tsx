@@ -26,7 +26,7 @@ export default async function StatisticsTab({ userId }: { userId: string }) {
   ];
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-[90%] mx-auto">
       <div className="flex flex-row gap-2 w-full">
         <div className="bg-success p-2.5 rounded-md w-full">
           <h1 className="text-xl font-semibold">{stats.gamesWon}</h1>

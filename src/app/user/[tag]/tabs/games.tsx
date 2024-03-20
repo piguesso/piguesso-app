@@ -1,6 +1,7 @@
 import GameCard from "@/components/profile/game-card";
 import { db } from "@/db";
-import { games, players, rounds } from "@/db/schema/game";
+import { games } from "@/db/schema/game";
+import { players } from "@/db/schema/players";
 import { users } from "@/db/schema/user";
 import { eq } from "drizzle-orm";
 
@@ -13,7 +14,7 @@ export default async function GamesTab({ playerId }: { playerId: string }) {
     .execute();
 
   return (
-    <div>
+    <div className={"w-[90%]"}>
       {fetchedGames.length === 0 && (
         <h1 className="text-center text-xl font-bold">No games found</h1>
       )}

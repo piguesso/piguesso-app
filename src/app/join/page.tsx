@@ -10,6 +10,7 @@ import { Rating } from "@mui/material";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import { submit } from "@/app/join/form-actions";
 import UserJoinForm from "@/app/join/user-join-form";
+import { playerScoring } from "@/db/schema/scoring";
 
 export default async function Page() {
   const User = await currentUser();
@@ -19,18 +20,37 @@ export default async function Page() {
   }
 
   let userExists = await db.query.users.findFirst({
-    where: eq(users.clerkId, User.id)
+    where: eq(users.clerkId, User.id),
   });
 
-  if (!userExists) {
-    await db.insert(users).values({ clerkId: User.id, tag: "NewTag", biography: "NewBio" });
-  } else {
-    redirect("/");
+  console.log(userExists);
+
+  !userExists &&
+    (await db
+      .insert(users)
+      .values({ clerkId: User.id, tag: User.username, biography: "NewBio" })
+      .onConflictDoNothing());
+  !userExists &&
+    (await db
+      .insert(playerScoring)
+      .values({ playerId: User.id, gamesPlayed: 0, gamesWon: 0 })
+      .onConflictDoNothing());
+
+  if (
+    userExists &&
+    userExists.biography !== "NewBio" &&
+    userExists?.biography
+  ) {
+    return redirect("/");
   }
 
   return (
     <main className={"w-full h-full bg-background"}>
-      <div className={twMerge("h-full w-full overflow-y-scroll bg-background p-5 flex flex-col gap-3")}>
+      <div
+        className={twMerge(
+          "h-full w-full overflow-y-scroll bg-background p-5 flex flex-col gap-3",
+        )}
+      >
         <div className="flex flex-row gap-4 bg-primary rounded-md p-4">
           <div>
             <Image
@@ -67,7 +87,5 @@ export default async function Page() {
         </div>
       </div>
     </main>
-  )
-    ;
+  );
 }
-

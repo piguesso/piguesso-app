@@ -1,9 +1,12 @@
 import DynamicIsland from "@/components/navigation/nav-bar";
+import { redirect } from "next/navigation";
+import { currentUser, SignIn } from "@clerk/nextjs";
 
-export default function Page() {
-  return (
-    <div className="w-full h-full bg-primary">
-      <DynamicIsland />
-    </div>
-  );
+export default async function Page() {
+  const User = await currentUser();
+  if (!User) {
+    return <SignIn />;
+  } else {
+    return redirect("/user/" + User.username);
+  }
 }

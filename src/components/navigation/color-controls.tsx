@@ -1,24 +1,34 @@
 "use client";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import WordSheet from "@/components/training/word-sheet";
 
 interface ColorControlsProps {
   setColor: (color: string) => void;
-  erease: () => void; //TODO Welcher Typ muss das sein: 
   clear: () => void;
+  generateNewWord: () => void;
+  currentWord: string;
 }
 
-const colors = ["secondary", "black", "primary"];
+const colors = ["warning", "black", "primary"];
 
-export default function ColorControls({ setColor, clear, erease }: ColorControlsProps) {
+export default function ColorControls({
+  setColor,
+  clear,
+  generateNewWord,
+  currentWord,
+}: ColorControlsProps) {
   const pathname = usePathname();
   const [selectedColor, setSelectedColor] = useState("black");
   const [selectedTool, setSelectedTool] = useState("pen");
 
-  if (!pathname.includes("/draw")) {
+  if (
+    !pathname.includes("/train") &&
+    !pathname.includes("/play") &&
+    !pathname.includes("/demo")
+  ) {
     return null;
   }
 
@@ -27,12 +37,33 @@ export default function ColorControls({ setColor, clear, erease }: ColorControls
       ? "#000"
       : selectedColor == "primary"
         ? "#AE6DF5"
-        : "#00C896",
+        : "#EE814E",
   );
 
   return (
     <div className="h-full flex">
       <div className="flex flex-row w-full h-full justify-evenly items-center">
+        {generateNewWord && (
+          <WordSheet
+            word={currentWord}
+            description={"Draw this at your own pace. Its only training"}
+          >
+            <div
+              className={twMerge(
+                "w-8 h-8 mx-2 bg-lightgrey/50 border-white border-2 rounded-full flex items-center justify-center cursor-pointer",
+                selectedTool === "forward" && "rounded-md",
+              )}
+              onMouseDown={() => setSelectedTool("forward")}
+              onMouseUp={() => setSelectedTool("pen")}
+              onClick={() => {
+                generateNewWord();
+                clear();
+              }}
+            >
+              <i className="fa-solid fa-forward"></i>
+            </div>
+          </WordSheet>
+        )}
         <div
           className={twMerge(
             "w-8 h-8 mx-2 bg-lightgrey/50 border-white border-2 rounded-full flex items-center justify-center cursor-pointer",
@@ -53,30 +84,33 @@ export default function ColorControls({ setColor, clear, erease }: ColorControls
         >
           <i className="fa-solid fa-pen"></i>
         </div>
+        <div className={"hidden sm:flex"}>
+          {colors.map((color) => (
+            <div
+              key={color}
+              className={twMerge(
+                "w-8 h-8 mx-2 bg-primary bg-warning bg-black",
+                `bg-${color}`,
+                selectedColor === color ? "rounded-md" : "rounded-full",
+                "cursor-pointer",
+                "animate-circle-to-rounded",
+              )}
+              onClick={() => setSelectedColor(color)}
+            />
+          ))}
+        </div>
         <div
           className={twMerge(
-            "w-8 h-8 mx-2 bg-lightgrey/50 border-white border-2 rounded-full flex items-center justify-center cursor-pointer",
-            selectedTool === "eraser" && "rounded-md",
+            "block sm:hidden w-8 h-8 mx-2 bg-black",
+            `bg-black`,
+            selectedColor === "black" ? "rounded-md" : "rounded-full",
+            "cursor-pointer",
+            "animate-circle-to-rounded",
           )}
-          onClick={erease}
-        >
-          <i className="fa-solid fa-eraser"></i>
-        </div>
-        {colors.map((color) => (
-          <div
-            key={color}
-            className={twMerge(
-              "w-8 h-8 mx-2 bg-primary bg-secondary bg-black",
-              `bg-${color}`,
-              selectedColor === color ? "rounded-md" : "rounded-full",
-              "cursor-pointer",
-              "animate-circle-to-rounded",
-            )}
-            onClick={() => setSelectedColor(color)}
-          />
-        ))}
+          onClick={() => setSelectedColor("black")}
+        />
       </div>
-      <div className="h-[80%] w-[1px] bg-gray-300 my-auto mx-2" />
+      <div className="h-[80%] w-[1px] bg-gray-500 my-auto mx-2" />
     </div>
   );
 }

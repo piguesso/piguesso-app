@@ -66,7 +66,6 @@ export default function Page() {
 
         <p>Letzte Aktualisierung: {currentDate}</p>
       </div>
-      <DynamicIsland />
     </div>
   );
 }

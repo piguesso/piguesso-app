@@ -1,21 +1,53 @@
-import GameStart from "@/components/game/game-start";
-import TimedRedirectAfterScreen from "@/components/game/timed-redirect-after-screen";
-import DynamicIsland from "@/components/navigation/nav-bar";
+import { SignIn, currentUser } from "@clerk/nextjs";
+import Wrapper from "./wrapper";
+import { db } from "@/db";
+import { and, eq } from "drizzle-orm";
+import { games } from "@/db/schema/game";
+import { redirect } from "next/navigation";
+import { players } from "@/db/schema/players";
 
-interface introProps {
+interface IntroProps {
   params: {
     game_slug: string;
   };
 }
 
-const TIME_TILL_START = 5000;
-export default function page({ params }: introProps) {
+export default async function page({ params }: IntroProps) {
+  const user = await currentUser();
+  if (!user) {
+    return <SignIn />;
+  }
+
+  const currentGame = await db.query.games.findFirst({
+    where: eq(games.gameSlug, params.game_slug),
+  });
+
+  if (!currentGame) {
+    return redirect("/play");
+  }
+
+  const isCurrentUserInGame = await db.query.players.findFirst({
+    where: and(
+      eq(players.playerId, user.id),
+      eq(players.gameId, currentGame.id),
+    ),
+  });
+
+  if (!isCurrentUserInGame) {
+    db.insert(players).values({
+      playerId: user.id,
+      gameId: currentGame.id,
+    });
+  }
+
   return (
-    <div className={"w-full h-full bg-primary overflow-clip"}>
-      <TimedRedirectAfterScreen time={TIME_TILL_START} href={"/drawing"}>
-        <GameStart time={TIME_TILL_START} />
-      </TimedRedirectAfterScreen>
-      <DynamicIsland />
-    </div>
+    <Wrapper
+      gameSlug={params.game_slug}
+      clerkId={user.id}
+      name={user.username ?? "Guest"}
+      avatar={user.imageUrl}
+      userAuthToken={user.username ?? ""}
+      gameId={currentGame.id}
+    />
   );
 }

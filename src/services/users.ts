@@ -1,3 +1,5 @@
+"use server";
+
 import { db } from "@/db";
 import { playerScoring } from "@/db/schema/scoring";
 import { InsertUser, users } from "@/db/schema/user";

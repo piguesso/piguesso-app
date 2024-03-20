@@ -1,30 +1,44 @@
-import Image from "next/image";
-// import { SignIn, SignInButton } from "@clerk/nextjs";
-import TextStyles from "@/utils/textstyles";
+import textstyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
-import DrawLink from "@/components/draw-link";
+import {
+  PlayLink,
+  AboutLink,
+  GithubLink,
+  TrainingLink,
+} from "@/components/draw-link";
 import DynamicIsland from "@/components/navigation/nav-bar";
+import { currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+import * as tf from "@tensorflow/tfjs";
+import LandingCanvas from "@/components/game/landing-canvas";
+export default async function Home() {
+  const user = await currentUser();
+  if (!user) {
+    return redirect("/sign-in");
+  }
 
-interface homeProps {}
-
-/*
-<SignInButton />
-*/
-
-export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 gap-8">
-      <div className={TextStyles.H2}>Welcome to </div>
+    <main className="min-h-screen items-center gap-4 bg-white w-full h-full overflow-hidden">
+      <LandingCanvas />
       <div
         className={twMerge(
-          TextStyles.H2Gradient,
-          "bg-gradient-to-r from-purple-400 to-yellow-400 pb-6",
+          textstyles.H1,
+          "flex flex-col items-center justify-center select-none mt-14",
         )}
       >
-        Piguesso
+        <div className={"text-black"}>Welcome to</div>
+        <div className={"mb-14 text-black"}>Piguesso</div>
+        <div className={"md:flex-row gap-6 grid grid-cols-2"}>
+          <PlayLink />
+          <AboutLink />
+          <GithubLink />
+          <TrainingLink />
+        </div>
       </div>
-      <DrawLink />
-      <DynamicIsland />
+      <DynamicIsland
+        UserImageUrl={user.imageUrl}
+        UserTag={user.username ?? undefined}
+      />
     </main>
   );
 }
