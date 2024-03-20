@@ -32,7 +32,7 @@ export default function TrainingCanvas({
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
   const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
   const [currentWord, setCurrentWord] = useState<string>("");
-  const [currentGuess, setCurrentGuess] = useState<string | null>(null);
+  const [currentGuess, setCurrentGuess] = useState<string | null>("");
   const [model, setModel] = useState<tf.LayersModel | null>(null);
   const [controls, setControls] = useState<boolean>(true);
   const currentRoute = usePathname();
