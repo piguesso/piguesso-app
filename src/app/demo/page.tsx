@@ -7,7 +7,8 @@ import { games } from "@/db/schema/game";
 import { redirect } from "next/navigation";
 import DemoCanvas from "@/app/demo/demoCanvas";
 import { submitDemo } from "@/app/demo/actions";
-import { categories } from "@/utils/categories";
+import { categories, getCategoryFromNumber } from "@/utils/categories";
+import DemoSheet from "@/app/demo/demo-sheet";
 
 export default async function Page() {
   const user = await currentUser();

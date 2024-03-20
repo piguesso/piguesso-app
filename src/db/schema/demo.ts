@@ -7,11 +7,12 @@ import {
   timestamp,
   varchar
 } from "drizzle-orm/pg-core";
+import { Mat } from "opencv-ts";
 
 const demo = pgTable("demo", {
   id: serial("id").primaryKey(),
   clerkId: varchar("clerk_id").notNull().unique(),
-  drawing: jsonb("drawing").$type<{data: number[][][]}>(),
+  drawing: jsonb("drawing").$type<{data: Mat}>(),
   term: integer("term"),
   guess: integer("guess"),
   termConfidence: real("term_confidence").default(0.0),

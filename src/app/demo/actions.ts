@@ -5,6 +5,7 @@ import { games } from "@/db/schema/game";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { demo } from "@/db/schema/demo";
+import { Mat } from "opencv-ts";
 
 async function startGame() {
   await db.update(games).set({
@@ -14,9 +15,9 @@ async function startGame() {
 }
 
 interface Drawing {
-  data: number[][][]
+  data: Mat
 }
-async function submitDemo(drawing: number[][][], clerkId:string, term:number, guess:number, confidence:number) {
+async function submitDemo(drawing: Mat, clerkId:string, term:number, guess:number, confidence:number) {
   const d: Drawing = {
     data: drawing,
   }
