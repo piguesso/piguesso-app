@@ -26,7 +26,7 @@ const Controls = ({
   return (
     <div
       className={
-        "w-full h-20 sm:w-fit bg-surface fixed sm:absolute bottom-0 sm:bottom-10 mx-auto left-0 right-0 rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] px-12"
+        "w-full h-20 sm:w-fit bg-surface absolute sm:absolute bottom-0 sm:bottom-10 mx-auto left-0 right-0 rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] px-12"
       }
     >
       <div className="max-w-fit h-full flex items-center">

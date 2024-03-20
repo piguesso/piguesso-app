@@ -1,3 +1,5 @@
+"use server";
+
 import { db } from "@/db";
 import { playerScoring } from "@/db/schema/scoring";
 import { InsertUser, users } from "@/db/schema/user";
@@ -29,5 +31,14 @@ export const updateUser = async (
     .update(users)
     .set(user)
     .where(eq(users.clerkId, clerkId))
+    .execute();
+};
+
+
+export const fetchUsers = async (userName: string) => {
+  return await db
+    .select()
+    .from(users)
+    .where(eq(users.clerkId, userName))
     .execute();
 };

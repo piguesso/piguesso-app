@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useDraw } from "@/hooks/useDraw";
-import { Navbar } from "@/components/navigation/nav-bar";
-import ColorControls from "@/components/navigation/color-controls";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import cv from "opencv-ts";
 import { reshape } from "mathjs";
@@ -17,6 +15,7 @@ import { MixIcon } from "@radix-ui/react-icons";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { usePathname } from "next/navigation";
 import { Controls } from "@/components/canvas/controls";
+import { useDrawPhone } from "@/hooks/useDrawPhone";
 
 interface CanvasProps {
   UserTag: string;
@@ -25,11 +24,11 @@ interface CanvasProps {
 }
 
 export default function TrainingCanvas({
-  UserTag,
-  UserImageUrl,
-  UserClerkId,
-}: CanvasProps) {
-  const [color, setColor] = useState<string>("#000000");
+                                         UserTag,
+                                         UserImageUrl,
+                                         UserClerkId
+                                       }: CanvasProps) {
+  const [color, setColor] = useState<string>("handleMouseUp#000000");
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
   const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
   const [currentWord, setCurrentWord] = useState<string>("");
@@ -37,13 +36,25 @@ export default function TrainingCanvas({
   const [model, setModel] = useState<tf.LayersModel | null>(null);
   const [controls, setControls] = useState<boolean>(true);
   const currentRoute = usePathname();
+  const { canvasRefPhone, onTouchStart, clearPhone } =
+    useDrawPhone(drawLinePhone);
+
+  const [deviceType, setDeviceType] = useState<string | null>(null);
 
   useEffect(() => {
+    const userAgent = window.navigator.userAgent;
+    const isMobile = /Mobile/.test(userAgent);
+
+    if (isMobile) {
+      setDeviceType("mobile");
+    } else {
+      setDeviceType("desktop");
+    }
     getFirstWord();
     toast.promise(getModel(), {
       loading: "Loading Model...",
       success: <b>Model Loaded!</b>,
-      error: <b>Could not load the model.</b>,
+      error: <b>Could not load the model.</b>
     });
   }, []);
 
@@ -87,12 +98,41 @@ export default function TrainingCanvas({
         points[i].x,
         points[i].y,
         points[i + 1].x,
-        points[i + 1].y,
+        points[i + 1].y
       );
       ctx.stroke();
     }
     setPoints([points[points.length - 1]]);
   }
+
+  function drawLinePhone({ prevPoint, currentPoint, ctx }: DrawProps) {
+    const lineColor = color;
+    const lineWidth = 5;
+
+    setPoints([...points, currentPoint]);
+
+    if (points.length < 5) {
+      return;
+    }
+
+    ctx.lineWidth = lineWidth;
+    ctx.strokeStyle = lineColor;
+    ctx.fillStyle = lineColor;
+
+    ctx.beginPath(), ctx.moveTo(points[0].x, points[0].y);
+
+    for (let i = 1; i < points.length - 1; i++) {
+      ctx.quadraticCurveTo(
+        points[i].x,
+        points[i].y,
+        points[i + 1].x,
+        points[i + 1].y
+      );
+      ctx.stroke();
+    }
+    setPoints([points[points.length - 1]]);
+  }
+
 
   const predict = () => {
     let CANVAS_SRC;
@@ -128,16 +168,17 @@ export default function TrainingCanvas({
     }
     if (topCats.includes(currentWord)) {
       setCurrentGuess(currentWord);
-      toast.success("Correct! You guessed the word!");
-      setCurrentGuess(null);
+      toast.success("Correct! Piguesso guessed the word!");
+      setCurrentGuess("");
       getFirstWord();
-      clear();
+      handleClear();
     } else {
       setCurrentGuess(topCats[0]);
     }
   };
 
   const handleClear = () => {
+    clearPhone();
     clear();
   };
 
@@ -148,37 +189,40 @@ export default function TrainingCanvas({
   return (
     <div
       className={twMerge(
-        "w-full h-full min-w-[300px] min-h-[300px] bg-surface overflow-hidden absolute",
-        "canvas-wrapper",
+        "w-full h-dvh min-w-[300px] min-h-[300px] bg-surface overflow-hidden touch-none"
       )}
     >
-      <div className="w-full h-full absolute top-0 flex-col justify-center items-center bg-black">
-        <div className={"w-full h-28 flex bg-primary items-center pl-16"}>
+      <div className="w-full absolute top-0 flex-col justify-center items-center bg-black">
+        <div className={"w-full h-20 flex bg-primary items-center pl-16"}>
           <div className={twMerge(TextStyles.H5, "text-center")}>
             Challenge: {currentWord}
           </div>
         </div>
         <div className={"w-full h-2 bg-surface"}></div>
-        <canvas
-          ref={canvasRef}
-          onMouseDown={onMouseDown}
-          onMouseUp={handleMouseUp}
-          width={size.width}
-          height={size.height}
-          className={"bg-white shadow-2xl"}
-          id={"inputCanvas"}
-        />
+      </div>
+      <canvas
+        ref={deviceType === "mobile" ? canvasRefPhone : canvasRef}
+        onMouseDown={onMouseDown}
+        onMouseUp={handleMouseUp}
+        onTouchStart={onTouchStart}
+        onTouchEnd={handleMouseUp}
+        width={size.width}
+        height={size.height}
+        className={"bg-white shadow-2xl"}
+        id={"inputCanvas"}
+      />
+      <div className={"w-full absolute bottom-0"}>
         <Alert
           className={
-            "w-[80%] md:w-1/3 mx-auto z-20 bottom-1/3 flex items-center"
+            "w-[80%] md:w-1/3 mx-auto z-20 bottom-24 md:bottom-36 flex items-center relative"
           }
         >
           <MixIcon className="h-4 w-4" />
           <AlertTitle className={TextStyles.RobotoBigText}>
             I am guessing that is a{" "}
             <span className={TextStyles.H7}>
-              {currentGuess?.replace("_", " ").toUpperCase()}
-            </span>
+                  {currentGuess?.replace("_", " ").toUpperCase()}
+                </span>
           </AlertTitle>
         </Alert>
         <Controls
