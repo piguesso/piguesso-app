@@ -1,11 +1,8 @@
 "use client";
 import NavLink from "./nav-link";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { HomeIcon, PlayIcon } from "@radix-ui/react-icons";
 
 interface DynamicIslandProps {

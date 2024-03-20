@@ -13,10 +13,6 @@ import * as tf from "@tensorflow/tfjs";
 import LandingCanvas from "@/components/game/landing-canvas";
 export default async function Home() {
   const user = await currentUser();
-  if (!user) {
-    return redirect("/sign-in");
-  }
-
   return (
     <main className="min-h-screen items-center gap-4 bg-white w-full h-full overflow-hidden">
       <LandingCanvas />
@@ -36,8 +32,8 @@ export default async function Home() {
         </div>
       </div>
       <DynamicIsland
-        UserImageUrl={user.imageUrl}
-        UserTag={user.username ?? undefined}
+        UserImageUrl={user?.imageUrl || ""}
+        UserTag={user?.username ?? undefined}
       />
     </main>
   );

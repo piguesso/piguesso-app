@@ -39,7 +39,7 @@ export default async function RootLayout({
         <title title={"Piguesso"} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>
-      <body className={"h-screen w-screen bg-pink-600 overflow-x-hidden overflow-y-hidden"} draggable={false}>
+      <body className={"h-screen w-screen bg-background overflow-x-hidden overflow-y-hidden"} draggable={false}>
       <Script
         src="https://kit.fontawesome.com/7dfc9e0334.js"
         crossOrigin="anonymous"
