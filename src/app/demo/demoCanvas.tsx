@@ -62,7 +62,7 @@ export default function DemoCanvas({
   useEffect(() => {
     getModel();
     new Timer()
-  });
+  }, []);
   const getModel = async () => {
     // loading model
     loadModel().then((model) => {
