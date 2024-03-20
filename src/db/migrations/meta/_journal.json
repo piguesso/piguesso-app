@@ -22,6 +22,13 @@
       "when": 1710930081094,
       "tag": "0005_real_exiles",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1710932317839,
+      "tag": "0006_orange_colleen_wing",
+      "breakpoints": true
     }
   ]
 }
