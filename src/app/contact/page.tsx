@@ -8,7 +8,7 @@ export default function Page() {
   let currentDate = Date.now();
 
   return (
-    <div className="flex flex-col p-10 h-full bg-black gap-y-10">
+    <div className="flex flex-col p-10 pb-40  bg-black gap-y-10">
       <h2 className={twMerge(TextStyles.H2Gradient, "items-center")}>
         Überschrift
       </h2>

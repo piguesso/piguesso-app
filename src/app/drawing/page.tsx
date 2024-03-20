@@ -175,7 +175,7 @@ export default function Page(props: pageProps) {
               ref={canvasRefPhone}
               onTouchStart={onTouchStart}
               onTouchEnd={() => setPoints([])}
-              width="full"
+              width={size.width || 0}
               height={(size.height || 0) * 0.55}
               className="w-full border border-border  rounded-md"
             />
