@@ -1,5 +1,7 @@
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
+import { int } from "drizzle-orm/mysql-core";
 import {
+  integer,
   pgTable,
   serial,
   timestamp,
@@ -11,6 +13,8 @@ const games = pgTable("games", {
   status: varchar("status").default("waiting"),
   gameSlug: varchar("game_slug").notNull(),
   winnerId: varchar("winner_id"),
+  maxPlayers: integer("max_players").notNull().default(4),
+  rounds: integer("rounds").notNull().default(3),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });

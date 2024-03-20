@@ -1,0 +1,1 @@
+ALTER TABLE "player_scoring_round" ALTER COLUMN "time_used_to_complete" SET DATA TYPE bigint;

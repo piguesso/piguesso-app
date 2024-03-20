@@ -1,0 +1,1 @@
+ALTER TABLE "rounds" ALTER COLUMN "end_time" DROP NOT NULL;

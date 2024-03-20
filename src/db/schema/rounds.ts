@@ -7,7 +7,7 @@ const rounds = pgTable("rounds", {
   roundNumber: integer("round_number").notNull(),
   topic: varchar("topic", { length: 100 }).notNull(),
   startTime: timestamp("start_time").notNull(),
-  endTime: timestamp("end_time").notNull(),
+  endTime: timestamp("end_time"),
 });
 
 export type SelectRound = InferSelectModel<typeof rounds>;
