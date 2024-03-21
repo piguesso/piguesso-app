@@ -7,6 +7,7 @@ import { twMerge } from "tailwind-merge";
 import Script from "next/script";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
+import NavbarTop from "@/components/navigation/navbar-top";
 
 const sono = Sono({ subsets: ["latin"] });
 
@@ -52,6 +53,7 @@ export default async function RootLayout({
       >
         <AppRouterCacheProvider>
           <Toaster />
+          <NavbarTop />
           {children}
         </AppRouterCacheProvider>
       </ThemeProvider>

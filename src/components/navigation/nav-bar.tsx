@@ -14,7 +14,7 @@ export default function DynamicIsland(props: DynamicIslandProps) {
   return (
     <div
       className={
-        "h-20 min-w-10 w-fit bg-surface absolute bottom-0 sm:bottom-10 mx-auto left-0 right-0 rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] px-12"
+        "h-20 min-w-10 w-fit bg-surface absolute bottom-10 sm:bottom-10 mx-auto left-0 right-0 rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] px-12"
       }
     >
       <div className="max-w-fit h-full flex">

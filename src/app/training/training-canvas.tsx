@@ -214,7 +214,7 @@ export default function TrainingCanvas({
       <div className={"w-full absolute bottom-0"}>
         <Alert
           className={
-            "w-[80%] md:w-1/3 mx-auto z-20 bottom-24 md:bottom-36 flex items-center relative"
+            "w-[80%] md:w-1/3 mx-auto z-20 bottom-36 flex items-center relative"
           }
         >
           <MixIcon className="h-4 w-4" />
