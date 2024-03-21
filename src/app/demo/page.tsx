@@ -23,7 +23,7 @@ export default async function Page() {
       username: user.username ?? "no username",
       imageUrl: user.imageUrl,
       host: false,
-      term: categories.pineapple,
+      term: categories.yoga,
     })
     .onConflictDoNothing();
 
@@ -39,7 +39,7 @@ export default async function Page() {
         UserTag={user.username ?? ""}
         UserClerkId={user.id}
         submit={submitDemo}
-        term={categories.pineapple}
+        term={categories.yoga}
       />
     </div>
   );

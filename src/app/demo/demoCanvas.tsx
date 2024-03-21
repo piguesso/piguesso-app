@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useDraw } from "@/hooks/useDraw";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import cv, { Mat } from "opencv-ts";
+import cv from "opencv-ts";
 import { reshape } from "mathjs";
 import * as tf from "@tensorflow/tfjs";
 import { loadModel } from "@/app/training/actions";
@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 import { Controls } from "@/components/canvas/controls";
 import DemoSheet from "@/app/demo/demo-sheet";
 import EndSheet from "@/app/demo/end-sheet";
+import { useDrawPhone } from "@/hooks/useDrawPhone";
 
 interface CanvasProps {
   UserTag: string;
@@ -22,21 +23,33 @@ interface CanvasProps {
   UserClerkId: string;
   term: number;
   submit: (
-    drawing: Mat,
+    drawing: number[][][],
     clerkId: string,
     term: number,
     guess: number,
-    confidence: number,
+    confidence: number
   ) => Promise<never>;
 }
 
+
+export class Timer {
+  constructor(public counter = 15, setSeconds: (s: number) => void) {
+    let intervalId = setInterval(() => {
+      const c = this.counter - 1;
+      this.counter = this.counter - 1;
+      setSeconds(c);
+      if (this.counter === 0) clearInterval(intervalId);
+    }, 1000);
+  }
+}
+
 export default function DemoCanvas({
-  UserTag,
-  UserImageUrl,
-  UserClerkId,
-  submit,
-  term,
-}: CanvasProps) {
+                                     UserTag,
+                                     UserImageUrl,
+                                     UserClerkId,
+                                     submit,
+                                     term
+                                   }: CanvasProps) {
   const [color, setColor] = useState<string>("#000000");
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
   const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
@@ -45,23 +58,23 @@ export default function DemoCanvas({
   const [open, setOpen] = useState<boolean>(true);
   const [seconds, setSeconds] = useState<number>(15);
   const [openEnd, setOpenEnd] = useState<boolean>(true);
+  const [timer, setTimer] = useState<Timer>();
+  const [deviceType, setDeviceType] = useState<string | null>(null);
+  const { canvasRefPhone, onTouchStart, clearPhone } =
+    useDrawPhone(drawLinePhone);
   const currentRoute = usePathname();
   const size = useWindowSize();
 
-  class Timer {
-    constructor(public counter = 15) {
-      let intervalId = setInterval(() => {
-        const c = this.counter - 1;
-        this.counter = this.counter - 1;
-        setSeconds(c)
-        if(this.counter === 0) clearInterval(intervalId)
-      }, 1000)
-    }
-  }
-
   useEffect(() => {
+    const userAgent = window.navigator.userAgent;
+    const isMobile = /Mobile/.test(userAgent);
+
+    if (isMobile) {
+      setDeviceType("mobile");
+    } else {
+      setDeviceType("desktop");
+    }
     getModel();
-    new Timer()
   }, []);
   const getModel = async () => {
     // loading model
@@ -76,6 +89,7 @@ export default function DemoCanvas({
 
 
   const handleClear = () => {
+    clearPhone();
     clear();
   };
 
@@ -85,12 +99,46 @@ export default function DemoCanvas({
 
 
   const handleSubmit = () => {
-    const [guess, termConfidence, dataReshaped] = predict()
-    if (!guess || !termConfidence || !dataReshaped || typeof dataReshaped === "number" || typeof guess !== "number" || typeof termConfidence !== "number") {
+    const [guess, termConfidence, dataReshaped] = predict();
+    if (!guess || !termConfidence || !dataReshaped || typeof guess !== "number" || typeof termConfidence !== "number") {
       toast.error("Piguesso did not make it to the session. Please refresh.");
       return;
     }
-    submit(dataReshaped, UserClerkId, categories.pineapple, guess, termConfidence)
+    toast.promise(
+      submit(dataReshaped, UserClerkId, categories.yoga, guess, termConfidence), {
+        success: "Demo round submitted",
+        error: "Could not submit your drawing...",
+        loading: "Submitting your drawing"
+      }
+    );
+  };
+
+  function drawLinePhone({ prevPoint, currentPoint, ctx }: DrawProps) {
+    const lineColor = color;
+    const lineWidth = 5;
+
+    setPoints([...points, currentPoint]);
+
+    if (points.length < 5) {
+      return;
+    }
+
+    ctx.lineWidth = lineWidth;
+    ctx.strokeStyle = lineColor;
+    ctx.fillStyle = lineColor;
+
+    ctx.beginPath(), ctx.moveTo(points[0].x, points[0].y);
+
+    for (let i = 1; i < points.length - 1; i++) {
+      ctx.quadraticCurveTo(
+        points[i].x,
+        points[i].y,
+        points[i + 1].x,
+        points[i + 1].y
+      );
+      ctx.stroke();
+    }
+    setPoints([points[points.length - 1]]);
   }
 
   function drawLine({ prevPoint, currentPoint, ctx }: DrawProps) {
@@ -114,7 +162,7 @@ export default function DemoCanvas({
         points[i].x,
         points[i].y,
         points[i + 1].x,
-        points[i + 1].y,
+        points[i + 1].y
       );
       ctx.stroke();
     }
@@ -144,8 +192,8 @@ export default function DemoCanvas({
         .sort((a, b) => b - a)
         .slice(0, 1);
       const guess = arr.indexOf(relevantPreds[0]);
-      const termConfidence = arr[categories.pineapple]
-      return [guess, termConfidence, dst]
+      const termConfidence = arr[categories.yoga];
+      return [guess, termConfidence, dataReshaped];
     } else {
       toast.error("Piguesso did not make it to the session. Please refresh.");
       return [null, null, null];
@@ -156,32 +204,37 @@ export default function DemoCanvas({
     <div
       className={twMerge(
         "w-full h-full min-w-[300px] min-h-[300px] bg-surface overflow-hidden absolute",
-        "canvas-wrapper",
+        "canvas-wrapper"
       )}
     >
       <div className="w-full h-full absolute top-0 flex-col justify-center items-center bg-black">
         <div className={"w-full h-28 flex bg-primary items-center md:pl-16 mx-auto"}>
           <div className={"w-full md:w-1/2 flex flex-col md:flex-row md:justify-between items-center"}>
             <div className={twMerge(TextStyles.H5, "text-center")}>
-              Challenge: {getCategoryFromNumber(categories.pineapple)}
+              Challenge: {getCategoryFromNumber(categories.yoga)}
             </div>
-            <div className={twMerge(TextStyles.H5, "text-center")}>
-              Draw in {seconds} Seconds
-            </div>
-        </div>
+            {seconds &&
+              <div className={twMerge(TextStyles.H5, "text-center")}>
+                Draw in {seconds} Seconds
+              </div>
+            }
+          </div>
         </div>
         <div className={"w-full h-2 bg-surface"}></div>
         <canvas
-          ref={canvasRef}
+          ref={deviceType === "mobile" ? canvasRefPhone : canvasRef}
           onMouseDown={onMouseDown}
           onMouseUp={handleMouseUp}
-          width={size.width || 600}
-          height={size.height || 600}
+          onTouchStart={onTouchStart}
+          onTouchEnd={handleMouseUp}
+          width={size.width}
+          height={size.height}
           className={"bg-white shadow-2xl"}
           id={"inputCanvas"}
         />
-        {/*<DemoSheet word={getCategoryFromNumber(categories.pineapple) ?? ""} open={open} setOpen={setOpen} />*/}
-        <EndSheet word={"pineapple"} open={openEnd && seconds === 0} submit={handleSubmit} />
+        <DemoSheet word={getCategoryFromNumber(categories.yoga) ?? ""} open={open} setOpen={setOpen}
+                   setTimer={setTimer} setSeconds={setSeconds} />
+        <EndSheet word={"yoga"} open={openEnd && seconds === 0} submit={handleSubmit} />
         <Controls
           UserTag={UserTag}
           controls={controls}

@@ -15,9 +15,9 @@ async function startGame() {
 }
 
 interface Drawing {
-  data: Mat
+  data: number[][][]
 }
-async function submitDemo(drawing: Mat, clerkId:string, term:number, guess:number, confidence:number) {
+async function submitDemo(drawing: number[][][], clerkId:string, term:number, guess:number, confidence:number) {
   const d: Drawing = {
     data: drawing,
   }

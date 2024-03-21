@@ -1,15 +1,20 @@
+"use client";
+
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { twMerge } from "tailwind-merge";
 import { Button } from "@mui/material";
 import TextStyles from "@/utils/textstyles";
+import { Timer } from "@/app/demo/demoCanvas";
 
 interface DemoSheet {
   word: string;
   open: boolean;
   setOpen: (b: boolean) => void;
+  setTimer: (t: Timer) => void;
+  setSeconds: (s: number) => void;
 }
 
-export default function DemoSheet({word, open, setOpen} : DemoSheet) {
+export default function DemoSheet({word, open, setOpen, setTimer, setSeconds} : DemoSheet) {
   return (
     <Sheet open={open}>
       <SheetContent side={"bottom"} className="w-screen h-screen bg-primary">
@@ -30,7 +35,10 @@ export default function DemoSheet({word, open, setOpen} : DemoSheet) {
               <Button
                 variant={"contained"}
                 className={"rounded-full bg-black py-3 px-8 mx-auto"}
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false)
+                  setTimer(new Timer(15, setSeconds))
+                }}
               >
                 Got it!
               </Button>

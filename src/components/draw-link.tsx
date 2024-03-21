@@ -24,7 +24,7 @@ export default function LandingPageLink({text, children, href} : LandingPageLink
     <Link href={href}>
         <Button
           variant="contained"
-          className={"bg-primary rounded-xl w-full h-40 flex flex-col"}
+          className={"bg-primary rounded-3xl w-full h-40 flex flex-col"}
         >
           {children}
           <span className={textstyles.H7}>{text}</span>

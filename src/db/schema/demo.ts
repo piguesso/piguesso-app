@@ -12,7 +12,7 @@ import { Mat } from "opencv-ts";
 const demo = pgTable("demo", {
   id: serial("id").primaryKey(),
   clerkId: varchar("clerk_id").notNull().unique(),
-  drawing: jsonb("drawing").$type<{data: Mat}>(),
+  drawing: jsonb("drawing").$type<{data: number[][][]}>(),
   term: integer("term"),
   guess: integer("guess"),
   termConfidence: real("term_confidence").default(0.0),
