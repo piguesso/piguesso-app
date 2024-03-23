@@ -60,7 +60,7 @@ export default function TrainingCanvas({
 
   const getFirstWord = () => {
     const word = getRandomCategory();
-    setCurrentWord(word);
+    setCurrentWord(word[0]);
   };
 
   const getModel = async () => {
