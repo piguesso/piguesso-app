@@ -2,24 +2,19 @@
 
 import { twMerge } from "tailwind-merge";
 import TextStyles from "@/utils/textstyles";
-import { Button, Input } from "@mui/material";
-import { createGame, joinGame } from "@/app/play/actions";
-import { useState } from "react";
+import { Button } from "@mui/material";
 import { redirect } from "next/navigation";
+import { joinDemoGame } from "./actions";
 
 interface createGameProps {
   clerkId: string;
 }
 
 export function CreateGame({ clerkId }: createGameProps) {
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleCreateGame = () => {
-    setIsLoading(true);
-    createGame(clerkId).finally(() => {
-      setIsLoading(false);
-    });
-  };
+  const handleJoinGameClick = () => {
+    joinDemoGame();
+  }
 
   return (
     <div
@@ -27,26 +22,22 @@ export function CreateGame({ clerkId }: createGameProps) {
         "sm:w-2/3 w-[80%] bg-primary rounded-2xl p-8 flex flex-col gap-4"
       }
     >
-      <h2 className={twMerge(TextStyles.H3, "text-center")}>Create Game</h2>
+      <h2 className={twMerge(TextStyles.H3, "text-center")}>Join Game</h2>
       <div className={twMerge(TextStyles.BigText, "text-center")}>
-        Create a game with your parameters and invite friends
+        Join our demo multiplayer game where you can compete with other players.
       </div>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
         <Button
           variant={"contained"}
           className={"rounded-full bg-black py-3 px-8 mx-auto"}
-          onClick={() => handleCreateGame()}
+          onClick={() => handleJoinGameClick()}
         >
-          Create Game
+          Join Game
         </Button>
-      )}
     </div>
   );
 }
 
-export function JoinGame() {
+/*export function JoinGame() {
   const [gameCode, setGameCode] = useState<string>();
 
   const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,4 +74,4 @@ export function JoinGame() {
       </Button>
     </div>
   );
-}
+}*/

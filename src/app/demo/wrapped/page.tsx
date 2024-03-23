@@ -13,12 +13,12 @@ export default async function Page() {
   const results = await db.query.demo.findMany();
 
   // get results where guess is 337
-  const yogas = results.filter((res) => {
-    return res.guess === 337;
+  const correct = results.filter((res) => {
+    return res.guess === res.term;
   });
 
   const others = results.filter((res) => {
-    return res.guess !== 337;
+    return res.guess !== res.term;
   });
 
   const nothing = results.filter((res) => {
@@ -33,10 +33,11 @@ export default async function Page() {
           <div className={twMerge(TextStyles.H4, "my-12 text-center w-full")}>Also beautiful...</div>
           <div className={"w-full flex flex-col gap-3 h-1/2 overflow-y-scroll"}>
             {others.map((result) => {
-              if (result.imageUrl === null || result.username === null || result.termConfidence === null || result.guess === null) return;
+              if (result.imageUrl === null || result.username === null || result.termConfidence === null || result.guess === null || result.term === null) return;
               return (
                 <WrappedCard imageUrl={result.imageUrl} username={result.username}
                              termconfidence={result.termConfidence}
+                             term={result.term}
                              guess={result.guess} key={result.clerkId} />
               );
             })
@@ -44,13 +45,14 @@ export default async function Page() {
           </div>
         </div>
         <div className={"h-full w-1/3"}>
-          <div className={twMerge(TextStyles.H4, "my-12 text-center w-full")}>Actual Yoga</div>
+          <div className={twMerge(TextStyles.H4, "my-12 text-center w-full")}>Actual term</div>
           <div className={"w-full flex flex-col gap-3 h-1/2 overflow-y-scroll"}>
-            {yogas.map((result) => {
-              if (result.imageUrl === null || result.username === null || result.termConfidence === null || result.guess === null) return;
+            {correct.map((result) => {
+              if (result.imageUrl === null || result.username === null || result.termConfidence === null || result.guess === null || result.term === null) return;
               return (
                 <WrappedCard imageUrl={result.imageUrl} username={result.username}
                              termconfidence={result.termConfidence}
+                             term={result.term}
                              guess={result.guess} key={result.clerkId} />
 
               );
@@ -64,10 +66,11 @@ export default async function Page() {
           </div>
           <div className={"w-full flex flex-col gap-3 h-1/2 overflow-y-scroll"}>
             {nothing.map((result) => {
-              if (result.imageUrl === null || result.username === null || result.termConfidence === null || result.guess === null) return;
+              if (result.imageUrl === null || result.username === null || result.termConfidence === null || result.guess === null || result.term === null) return;
               return (
                 <WrappedCard imageUrl={result.imageUrl} username={result.username}
                              termconfidence={result.termConfidence}
+                             term={result.term}
                              guess={result.guess} key={result.clerkId} />
               );
             })
@@ -86,12 +89,13 @@ interface wrappedCardProps {
   username: string;
   termconfidence: number;
   guess: number;
+  term: number;
 }
 
-const WrappedCard = ({ imageUrl, username, termconfidence, guess }: wrappedCardProps) => {
+const WrappedCard = ({ imageUrl, username, termconfidence, guess, term }: wrappedCardProps) => {
   return (
     <div className={"w-3/4 mx-auto h-20 bg-surface border-2 border-white rounded-3xl"}>
-      <div className={"flex w-full h-full items-center gap-6 px-6"}>
+      <div className={"flex flex-row justify-between w-full h-20 items-center gap-6 px-6"}>
         <Image
           src={imageUrl}
           height={50}
@@ -103,9 +107,13 @@ const WrappedCard = ({ imageUrl, username, termconfidence, guess }: wrappedCardP
           <div className={twMerge(TextStyles.RobotoBigText, "w-full")}>{username}</div>
           <div className={twMerge(TextStyles.H7, "w-full")}>{getCategoryFromNumber(guess)}</div>
         </div>
-        <div
-          className={twMerge(TextStyles.BigText, "text-warning my-12 text-center w-full")}>{(termconfidence * 100).toPrecision(2)}%
-          Yoga
+        <div className={twMerge(TextStyles.BigText, "text-warning text-center w-full flex flex-row gap-2")}>
+          <span>
+            {(termconfidence * 100).toPrecision(2)}%
+          </span>
+          <span>
+            { getCategoryFromNumber(term) ?? "unknown" }
+          </span>
         </div>
       </div>
     </div>

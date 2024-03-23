@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs";
 import TextStyles from "@/utils/textstyles";
 import { twMerge } from "tailwind-merge";
-import { CreateGame, JoinGame } from "@/app/play/join-create-games";
+import { CreateGame } from "@/app/play/join-create-games";
 
 export default async function Page() {
   const user = await currentUser();
@@ -19,7 +19,7 @@ export default async function Page() {
         </h1>
         <div className={"flex flex-col gap-8 items-center"}>
           <CreateGame clerkId={user.id} />
-          <JoinGame />
+          { /* <JoinGame /> */ }
         </div>
       </div>
       <DynamicIsland

@@ -33,3 +33,7 @@ export const joinGame = (slug: string) => {
   }
   return redirect(`/play/${slug}`);
 }
+
+export const joinDemoGame = () => {
+  redirect("/demo");
+}

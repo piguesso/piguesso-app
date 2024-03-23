@@ -350,7 +350,7 @@ function getCategoryFromNumber(num: number) {
 function getRandomCategory() {
   const categoryEntries = Object.entries(categories);
   const randomIndex = Math.floor(Math.random() * categoryEntries.length);
-  return categoryEntries[randomIndex][0];
+  return categoryEntries[randomIndex];
 }
 
 export { categories, getCategoryFromNumber, getRandomCategory };

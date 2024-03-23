@@ -105,7 +105,7 @@ export default function DemoCanvas({
       return;
     }
     toast.promise(
-      submit(dataReshaped, UserClerkId, categories.yoga, guess, termConfidence), {
+      submit(dataReshaped, UserClerkId, term, guess, termConfidence), {
         success: "Demo round submitted",
         error: "Could not submit your drawing...",
         loading: "Submitting your drawing"
@@ -192,7 +192,7 @@ export default function DemoCanvas({
         .sort((a, b) => b - a)
         .slice(0, 1);
       const guess = arr.indexOf(relevantPreds[0]);
-      const termConfidence = arr[categories.yoga];
+      const termConfidence = arr[term];
       return [guess, termConfidence, dataReshaped];
     } else {
       toast.error("Piguesso did not make it to the session. Please refresh.");
@@ -211,7 +211,7 @@ export default function DemoCanvas({
         <div className={"w-full h-28 flex bg-primary items-center md:pl-16 mx-auto"}>
           <div className={"w-full md:w-1/2 flex flex-col md:flex-row md:justify-between items-center"}>
             <div className={twMerge(TextStyles.H5, "text-center")}>
-              Challenge: {getCategoryFromNumber(categories.yoga)}
+              Challenge: {getCategoryFromNumber(term)}
             </div>
             {seconds &&
               <div className={twMerge(TextStyles.H5, "text-center")}>
@@ -232,9 +232,9 @@ export default function DemoCanvas({
           className={"bg-white shadow-2xl"}
           id={"inputCanvas"}
         />
-        <DemoSheet word={getCategoryFromNumber(categories.yoga) ?? ""} open={open} setOpen={setOpen}
+        <DemoSheet word={getCategoryFromNumber(term) ?? ""} open={open} setOpen={setOpen}
                    setTimer={setTimer} setSeconds={setSeconds} />
-        <EndSheet word={"yoga"} open={openEnd && seconds === 0} submit={handleSubmit} />
+        <EndSheet word={getCategoryFromNumber(term) ?? "unknown"} open={openEnd && seconds === 0} submit={handleSubmit} />
         <Controls
           UserTag={UserTag}
           controls={controls}

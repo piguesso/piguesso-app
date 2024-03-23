@@ -7,7 +7,7 @@ import { games } from "@/db/schema/game";
 import { redirect } from "next/navigation";
 import DemoCanvas from "@/app/demo/demoCanvas";
 import { submitDemo } from "@/app/demo/actions";
-import { categories, getCategoryFromNumber } from "@/utils/categories";
+import { categories, getCategoryFromNumber, getRandomCategory } from "@/utils/categories";
 import DemoSheet from "@/app/demo/demo-sheet";
 
 export default async function Page() {
@@ -16,6 +16,8 @@ export default async function Page() {
     return <SignIn />;
   }
 
+  const randomCategory = getRandomCategory();
+
   await db
     .insert(demo)
     .values({
@@ -23,7 +25,7 @@ export default async function Page() {
       username: user.username ?? "no username",
       imageUrl: user.imageUrl,
       host: false,
-      term: categories.yoga,
+      term: randomCategory[1],
     })
     .onConflictDoNothing();
 
@@ -39,7 +41,7 @@ export default async function Page() {
         UserTag={user.username ?? ""}
         UserClerkId={user.id}
         submit={submitDemo}
-        term={categories.yoga}
+        term={randomCategory[1]}
       />
     </div>
   );
