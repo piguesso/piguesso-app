@@ -27,7 +27,7 @@ async function submitDemo(drawing: number[][][], clerkId:string, term:number, gu
     guess: guess,
     termConfidence: confidence,
   }).where(eq(demo.clerkId, clerkId))
-  return redirect("/demo/wrapped")
+  return redirect(`/demo/wrapped/${term}`)
 }
 
 export {startGame, submitDemo}
